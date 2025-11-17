@@ -1,3 +1,25 @@
+# SSI Learning Project: Self-Sovereign Identity Implementation
+
+> **🎓 This is a learning project!** Start with `QUICK_START.md` to begin your SSI learning journey.
+
+This project guides you through understanding and implementing Self-Sovereign Identity (SSI) from basics to full implementation. Each smart contract includes extensive annotations explaining **what**, **how**, and **why**.
+
+## 📚 Learning Resources
+
+- **`QUICK_START.md`** - Start here! Quick guide to begin learning
+- **`LEARNING_PATH.md`** - Complete learning journey with all phases
+- **`PHASE_2_IMPLEMENTATION.md`** - Step-by-step guide for Phase 2 (DID Registry)
+
+## 🎯 Current Phase: Phase 2 - DID Registry
+
+The project currently includes:
+- ✅ Complete learning path documentation
+- ✅ DID Registry smart contract (fully annotated)
+- ✅ Comprehensive test suite (educational!)
+- ✅ Deployment scripts
+
+---
+
 # DApp Setup (Rookie-friendly)
 
 **Frontend**: Vite + React 18 + RainbowKit v2 + wagmi v2 + viem + TanStack Query v5 + Tailwind v4  
