@@ -19,7 +19,7 @@ The project is organized into **phases**, each building on the previous:
 
 ### Step 1: Read the Learning Path
 
-Start here: **`LEARNING_PATH.md`**
+Start here: **`02_LEARNING_PATH.md`**
 
 This document contains:
 - Complete learning journey overview
@@ -31,7 +31,7 @@ This document contains:
 
 ### Step 2: Start with Phase 0
 
-Read **Phase 0: Foundation - Understanding Identity** in `LEARNING_PATH.md`
+Read **Phase 0: Foundation - Understanding Identity** in `02_LEARNING_PATH.md`
 
 **Key questions to think about:**
 - What is digital identity?
@@ -40,7 +40,7 @@ Read **Phase 0: Foundation - Understanding Identity** in `LEARNING_PATH.md`
 
 ### Step 3: Move to Phase 1
 
-Read **Phase 1: Introduction to SSI Concepts** in `LEARNING_PATH.md`
+Read **Phase 1: Introduction to SSI Concepts** in `02_LEARNING_PATH.md`
 
 **Focus on:**
 - The three actors: Issuer, Holder, Verifier
@@ -51,14 +51,14 @@ Read **Phase 1: Introduction to SSI Concepts** in `LEARNING_PATH.md`
 
 Once you understand the concepts, start building!
 
-**Read**: `PHASE_2_IMPLEMENTATION.md`
+**Read**: `03_PHASE_2_IMPLEMENTATION.md`
 
 **Then:**
 1. Review the contract: `packages/contracts/contracts/SSI/DIDRegistry.sol`
 2. Read all the annotations (they explain everything!)
 3. Compile: `pnpm contracts:compile`
 4. Run tests: `pnpm contracts:test --grep "DIDRegistry"`
-5. Deploy locally: Follow instructions in `PHASE_2_IMPLEMENTATION.md`
+5. Deploy locally: Follow instructions in `03_PHASE_2_IMPLEMENTATION.md`
 
 ## 📖 How to Use This Project
 
@@ -74,7 +74,7 @@ Every smart contract has extensive annotations:
 
 For each phase:
 
-1. **Read** the concepts in `LEARNING_PATH.md`
+1. **Read** the concepts in `02_LEARNING_PATH.md`
 2. **Study** the annotated code
 3. **Run** the tests to see it in action
 4. **Experiment** - modify code and see what happens
@@ -93,10 +93,13 @@ Read the test files - they're heavily commented for learning.
 ## 🛠️ Project Structure
 
 ```
-DAO_trial_9_SSI/
-├── LEARNING_PATH.md          # Complete learning journey
-├── PHASE_2_IMPLEMENTATION.md  # Phase 2 step-by-step guide
-├── QUICK_START.md            # This file
+ssilearning.eth.limo/
+├── docs/
+│   └── learning/
+│       ├── 01_QUICK_START.md          # This file
+│       ├── 02_LEARNING_PATH.md        # Complete learning journey
+│       ├── 03_PHASE_2_IMPLEMENTATION.md  # Phase 2 step-by-step guide
+│       └── 04_DID_RESOLUTION_EXPLAINED.md  # Deep dive on resolution
 │
 ├── packages/
 │   └── contracts/
@@ -123,7 +126,7 @@ DAO_trial_9_SSI/
 
 ## 📝 Current Status
 
-- ✅ **Phase 0-1**: Concepts documented in `LEARNING_PATH.md`
+- ✅ **Phase 0-1**: Concepts documented in `02_LEARNING_PATH.md`
 - ✅ **Phase 2**: DID Registry contract implemented with full annotations
 - 🚧 **Phase 3-7**: Coming soon as you progress
 
@@ -156,8 +159,8 @@ pnpm contracts:docs
 
 ## 🎯 Your First Task
 
-1. Read `LEARNING_PATH.md` (especially Phase 0-1)
-2. Read `PHASE_2_IMPLEMENTATION.md`
+1. Read `02_LEARNING_PATH.md` (especially Phase 0-1)
+2. Read `03_PHASE_2_IMPLEMENTATION.md`
 3. Open `packages/contracts/contracts/SSI/DIDRegistry.sol`
 4. Read through the contract, paying attention to all comments
 5. Compile and test: `pnpm contracts:compile && pnpm contracts:test --grep "DIDRegistry"`

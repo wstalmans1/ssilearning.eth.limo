@@ -35,33 +35,39 @@ contract DIDRegistry {
      * @notice Emitted when a new DID is registered
      * @param did The Decentralized Identifier (e.g., "did:ethr:0x123...")
      * @param controller The Ethereum address that controls this DID
-     * @param documentHash The hash of the DID Document (stored off-chain)
+     * @param documentHash The hash of the DID Document (for verification)
+     * @param documentURI The location where the DID Document can be fetched
      * 
      * WHY WE EMIT EVENTS:
      * - Events are cheaper than storage (for historical data)
      * - Frontend apps can listen to events for real-time updates
      * - Events provide a searchable history of DID registrations
+     * - documentURI in event allows off-chain indexing without querying storage
      */
     event DIDRegistered(
         string indexed did,
         address indexed controller,
-        bytes32 documentHash
+        bytes32 documentHash,
+        string documentURI
     );
 
     /**
-     * @notice Emitted when a DID Document hash is updated
+     * @notice Emitted when a DID Document is updated
      * @param did The DID being updated
      * @param newDocumentHash The new hash of the DID Document
+     * @param newDocumentURI The new location of the DID Document
      * @param previousDocumentHash The previous hash (for tracking changes)
      * 
      * WHY ALLOW UPDATES:
      * - DID Documents may need to be updated (new keys, new services)
      * - The hash changes when the document changes
-     * - We track both old and new hash for audit purposes
+     * - The URI may change if document is moved to new location
+     * - We track both old and new values for audit purposes
      */
     event DIDDocumentUpdated(
         string indexed did,
         bytes32 newDocumentHash,
+        string newDocumentURI,
         bytes32 previousDocumentHash
     );
 
@@ -87,9 +93,20 @@ contract DIDRegistry {
      * 
      * WHY THIS STRUCTURE:
      * - controller: The Ethereum address that owns/controls this DID
-     * - documentHash: Hash of the DID Document (stored off-chain)
+     * - documentHash: Hash of the DID Document (for verification)
+     * - documentURI: Location where the DID Document can be fetched (IPFS CID, HTTP URL, etc.)
      * - registeredAt: Timestamp of registration (useful for analytics)
      * - updatedAt: Last update timestamp (for tracking changes)
+     * 
+     * WHY STORE documentURI:
+     * - CRITICAL: Without this, resolvers don't know WHERE to fetch the document!
+     * - Enables complete DID resolution: hash tells you WHAT to verify, URI tells you WHERE to get it
+     * - Can store IPFS CID (ipfs://Qm...), HTTP URL (https://...), or any URI format
+     * 
+     * TRADE-OFF:
+     * - Costs extra gas (~20,000 gas for string storage)
+     * - But enables direct on-chain resolution without off-chain infrastructure
+     * - Alternative: Store URI in events (cheaper but requires indexing)
      * 
      * WHY STORE TIMESTAMPS:
      * - Useful for auditing and compliance
@@ -98,9 +115,10 @@ contract DIDRegistry {
      */
     struct DIDRecord {
         address controller;        // Who controls this DID
-        bytes32 documentHash;    // Hash of the DID Document (off-chain)
-        uint256 registeredAt;     // When was this DID registered
-        uint256 updatedAt;        // When was it last updated
+        bytes32 documentHash;      // Hash of the DID Document (for verification)
+        string documentURI;        // Where to fetch the DID Document (e.g., "ipfs://Qm..." or "https://...")
+        uint256 registeredAt;      // When was this DID registered
+        uint256 updatedAt;         // When was it last updated
     }
 
     /**
@@ -134,27 +152,42 @@ contract DIDRegistry {
      * @notice Registers a new DID
      * @param did The Decentralized Identifier (must follow format: "did:ethr:0x...")
      * @param documentHash The hash of the DID Document (SHA-256 recommended)
+     * @param documentURI The location where the DID Document can be fetched
+     *                    Examples: "ipfs://QmXoypizj..." or "https://example.com/did-docs/123"
      * 
      * @dev Requirements:
      * - DID must not already be registered
      * - Caller must not already control a DID
      * - DID format should be validated (simplified here for learning)
+     * - documentURI should not be empty (enables resolution)
      * 
      * HOW IT WORKS:
      * 1. Check if DID already exists (revert if yes)
      * 2. Check if caller already has a DID (revert if yes - simplified)
-     * 3. Store the DID record
-     * 4. Store reverse mapping (address -> DID)
-     * 5. Emit event for frontend/off-chain systems
+     * 3. Validate documentURI is not empty (critical for resolution)
+     * 4. Store the DID record (including hash AND URI)
+     * 5. Store reverse mapping (address -> DID)
+     * 6. Emit event for frontend/off-chain systems
      * 
-     * GAS COST: ~50,000 - 70,000 gas (depending on DID string length)
+     * COMPLETE RESOLUTION FLOW:
+     * 1. Resolver calls resolveDID() → gets documentHash and documentURI
+     * 2. Resolver fetches document from documentURI (IPFS, HTTP, etc.)
+     * 3. Resolver hashes the fetched document
+     * 4. Resolver compares: fetched hash == documentHash? → Authentic!
+     * 
+     * GAS COST: ~70,000 - 90,000 gas (depending on DID and URI string lengths)
      * 
      * SECURITY CONSIDERATIONS:
      * - Only the caller can register a DID for themselves
      * - No one can register a DID for someone else
      * - DID format validation is simplified (add more checks in production)
+     * - documentURI should point to immutable content (IPFS) or trusted source
      */
-    function registerDID(string memory did, bytes32 documentHash) external {
+    function registerDID(
+        string memory did,
+        bytes32 documentHash,
+        string memory documentURI
+    ) external {
         // WHY CHECK: Prevent overwriting existing DIDs
         // This ensures DID uniqueness (critical for identity systems)
         require(
@@ -169,6 +202,13 @@ contract DIDRegistry {
             "DIDRegistry: Address already has a DID"
         );
 
+        // WHY CHECK: documentURI is critical - without it, resolvers can't fetch the document!
+        // This solves the "chicken and egg" problem you identified
+        require(
+            bytes(documentURI).length > 0,
+            "DIDRegistry: documentURI cannot be empty"
+        );
+
         // WHY STORE TIMESTAMP: Useful for auditing and analytics
         uint256 timestamp = block.timestamp;
 
@@ -176,9 +216,10 @@ contract DIDRegistry {
         // WHY STRUCT: Groups related data together, easier to manage
         _dids[did] = DIDRecord({
             controller: msg.sender,        // The caller owns this DID
-            documentHash: documentHash,   // Hash of off-chain document
-            registeredAt: timestamp,       // When registered
-            updatedAt: timestamp           // Initially same as registered
+            documentHash: documentHash,   // Hash of document (for verification)
+            documentURI: documentURI,     // Where to fetch the document (IPFS, HTTP, etc.)
+            registeredAt: timestamp,      // When registered
+            updatedAt: timestamp          // Initially same as registered
         });
 
         // Store reverse mapping for efficient lookup
@@ -186,35 +227,43 @@ contract DIDRegistry {
         _controllerToDID[msg.sender] = did;
 
         // WHY EMIT EVENT: Cheaper than storage, enables off-chain indexing
-        emit DIDRegistered(did, msg.sender, documentHash);
+        // Includes documentURI so indexers can build DID → Location databases
+        emit DIDRegistered(did, msg.sender, documentHash, documentURI);
     }
 
     /**
-     * @notice Updates the DID Document hash for an existing DID
+     * @notice Updates the DID Document for an existing DID
      * @param did The DID to update
      * @param newDocumentHash The new hash of the DID Document
+     * @param newDocumentURI The new location of the DID Document (can be same as before)
      * 
      * @dev Requirements:
      * - DID must exist
      * - Caller must be the DID controller
+     * - newDocumentURI must not be empty
      * 
      * WHY ALLOW UPDATES:
      * - DID Documents may need updates (add new keys, services)
      * - When document changes, hash changes
+     * - Document may be moved to new location (new IPFS CID, etc.)
      * - This allows DID evolution without re-registration
      * 
      * USE CASES:
      * - Adding a new public key for authentication
      * - Adding a service endpoint (e.g., credential wallet)
      * - Updating recovery mechanisms
+     * - Moving document to new storage location
      * 
      * SECURITY:
      * - Only the controller can update
      * - Old hash is preserved in event for audit trail
+     * - Both hash and URI are updated atomically
      */
-    function updateDIDDocument(string memory did, bytes32 newDocumentHash)
-        external
-    {
+    function updateDIDDocument(
+        string memory did,
+        bytes32 newDocumentHash,
+        string memory newDocumentURI
+    ) external {
         // WHY CHECK: Ensure DID exists
         DIDRecord storage record = _dids[did];
         require(
@@ -229,15 +278,23 @@ contract DIDRegistry {
             "DIDRegistry: Only controller can update"
         );
 
+        // WHY CHECK: documentURI is required for resolution
+        require(
+            bytes(newDocumentURI).length > 0,
+            "DIDRegistry: documentURI cannot be empty"
+        );
+
         // WHY STORE OLD HASH: For audit trail and event emission
         bytes32 previousHash = record.documentHash;
 
-        // Update the document hash
+        // Update both hash and URI atomically
+        // WHY ATOMIC: Ensures hash and URI always match
         record.documentHash = newDocumentHash;
+        record.documentURI = newDocumentURI;
         record.updatedAt = block.timestamp;
 
         // WHY EMIT EVENT: Track all updates for auditing
-        emit DIDDocumentUpdated(did, newDocumentHash, previousHash);
+        emit DIDDocumentUpdated(did, newDocumentHash, newDocumentURI, previousHash);
     }
 
     /**
@@ -301,19 +358,29 @@ contract DIDRegistry {
      * @notice Resolves a DID to its record
      * @param did The DID to resolve
      * @return controller The address that controls this DID
-     * @return documentHash The hash of the DID Document
+     * @return documentHash The hash of the DID Document (for verification)
+     * @return documentURI The location where the DID Document can be fetched
      * @return registeredAt When the DID was registered
      * @return updatedAt When the DID was last updated
      * 
      * WHAT IS DID RESOLUTION:
      * - The process of looking up a DID to get its information
      * - Similar to DNS lookup (domain name -> IP address)
-     * - Here: DID -> DID Document hash and controller
+     * - Here: DID -> DID Document hash, URI, and controller
+     * 
+     * COMPLETE RESOLUTION FLOW:
+     * 1. Call resolveDID() → Get documentHash and documentURI
+     * 2. Fetch document from documentURI (IPFS, HTTP, etc.)
+     * 3. Hash the fetched document (SHA-256)
+     * 4. Compare: fetched hash == documentHash?
+     *    - If YES → Document is authentic ✓
+     *    - If NO → Document was tampered with ✗
      * 
      * WHY THIS FUNCTION:
      * - Enables verifiers to resolve issuer DIDs
      * - Allows checking DID ownership
-     * - Provides all information needed for verification
+     * - Provides ALL information needed for complete resolution
+     * - documentURI solves the "where to fetch" problem you identified!
      * 
      * GAS COST: ~2,100 gas (warm storage read)
      */
@@ -323,6 +390,7 @@ contract DIDRegistry {
         returns (
             address controller,
             bytes32 documentHash,
+            string memory documentURI,
             uint256 registeredAt,
             uint256 updatedAt
         )
@@ -334,6 +402,7 @@ contract DIDRegistry {
         return (
             record.controller,
             record.documentHash,
+            record.documentURI,
             record.registeredAt,
             record.updatedAt
         );

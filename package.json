@@ -1,6 +1,10 @@
 {
-  "name": "dapp_setup",
+  "name": "ssilearning-eth-limo",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wstalmans1/ssilearning.eth.limo.git"
+  },
   "packageManager": "pnpm@10.16.1",
   "engines": {
     "node": ">=22 <23"

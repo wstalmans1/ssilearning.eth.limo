@@ -3,7 +3,7 @@ import { mainnet, polygon, optimism, arbitrum, sepolia } from 'wagmi/chains'
 import { http } from 'wagmi'
 
 export const config = getDefaultConfig({
-  appName: 'DAO dApp',
+  appName: 'SSI Learning',
   projectId: import.meta.env.VITE_WALLETCONNECT_ID!,
   chains: [mainnet, polygon, optimism, arbitrum, sepolia],
   transports: {

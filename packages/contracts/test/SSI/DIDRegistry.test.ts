@@ -20,9 +20,10 @@ describe("DIDRegistry", function () {
   let user1: any;
   let user2: any;
 
-  // Sample DID and document hash for testing
+  // Sample DID, document hash, and URI for testing
   const sampleDID = "did:ethr:0x1234567890123456789012345678901234567890";
   const sampleDocumentHash = ethers.keccak256(ethers.toUtf8Bytes("sample-did-document"));
+  const sampleDocumentURI = "ipfs://QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco"; // Example IPFS CID
 
   /**
    * @notice Setup function that runs before each test
@@ -60,39 +61,40 @@ describe("DIDRegistry", function () {
       // WHY: We use user1 to register (not owner)
       // This tests that anyone can register their own DID
       await expect(
-        didRegistry.connect(user1).registerDID(sampleDID, sampleDocumentHash)
+        didRegistry.connect(user1).registerDID(sampleDID, sampleDocumentHash, sampleDocumentURI)
       )
         .to.emit(didRegistry, "DIDRegistered")
-        .withArgs(sampleDID, user1.address, sampleDocumentHash);
+        .withArgs(sampleDID, user1.address, sampleDocumentHash, sampleDocumentURI);
 
       // WHY: Verify the registration worked
       // We check that we can resolve the DID and get correct information
-      const [controller, documentHash] = await didRegistry.resolveDID(sampleDID);
+      const [controller, documentHash, documentURI] = await didRegistry.resolveDID(sampleDID);
       
       expect(controller).to.equal(user1.address);
       expect(documentHash).to.equal(sampleDocumentHash);
+      expect(documentURI).to.equal(sampleDocumentURI);
     });
 
     it("Should prevent duplicate DID registration", async function () {
       // WHY: Register first time (should succeed)
-      await didRegistry.connect(user1).registerDID(sampleDID, sampleDocumentHash);
+      await didRegistry.connect(user1).registerDID(sampleDID, sampleDocumentHash, sampleDocumentURI);
 
       // WHY: Try to register same DID again (should fail)
       // This tests the uniqueness requirement
       await expect(
-        didRegistry.connect(user2).registerDID(sampleDID, sampleDocumentHash)
+        didRegistry.connect(user2).registerDID(sampleDID, sampleDocumentHash, sampleDocumentURI)
       ).to.be.revertedWith("DIDRegistry: DID already registered");
     });
 
     it("Should prevent one address from registering multiple DIDs", async function () {
       // WHY: Register first DID (should succeed)
-      await didRegistry.connect(user1).registerDID(sampleDID, sampleDocumentHash);
+      await didRegistry.connect(user1).registerDID(sampleDID, sampleDocumentHash, sampleDocumentURI);
 
       // WHY: Try to register second DID with same address (should fail)
       // This tests the one-DID-per-address rule (simplified for learning)
       const secondDID = "did:ethr:0xabcdefabcdefabcdefabcdefabcdefabcdefabcd";
       await expect(
-        didRegistry.connect(user1).registerDID(secondDID, sampleDocumentHash)
+        didRegistry.connect(user1).registerDID(secondDID, sampleDocumentHash, sampleDocumentURI)
       ).to.be.revertedWith("DIDRegistry: Address already has a DID");
     });
 
@@ -101,18 +103,26 @@ describe("DIDRegistry", function () {
       const user1DID = "did:ethr:0x1111111111111111111111111111111111111111";
       const user2DID = "did:ethr:0x2222222222222222222222222222222222222222";
 
-      await didRegistry.connect(user1).registerDID(user1DID, sampleDocumentHash);
-      await didRegistry.connect(user2).registerDID(user2DID, sampleDocumentHash);
+      await didRegistry.connect(user1).registerDID(user1DID, sampleDocumentHash, sampleDocumentURI);
+      await didRegistry.connect(user2).registerDID(user2DID, sampleDocumentHash, sampleDocumentURI);
 
       // WHY: Verify both DIDs exist and are controlled by correct addresses
       expect(await didRegistry.didExists(user1DID)).to.be.true;
       expect(await didRegistry.didExists(user2DID)).to.be.true;
       
-      const user1Controller = (await didRegistry.resolveDID(user1DID))[0];
-      const user2Controller = (await didRegistry.resolveDID(user2DID))[0];
+      const [user1Controller] = await didRegistry.resolveDID(user1DID);
+      const [user2Controller] = await didRegistry.resolveDID(user2DID);
       
       expect(user1Controller).to.equal(user1.address);
       expect(user2Controller).to.equal(user2.address);
+    });
+
+    it("Should require documentURI when registering", async function () {
+      // WHY: This tests the critical requirement - documentURI cannot be empty
+      // Without documentURI, resolvers can't fetch the document!
+      await expect(
+        didRegistry.connect(user1).registerDID(sampleDID, sampleDocumentHash, "")
+      ).to.be.revertedWith("DIDRegistry: documentURI cannot be empty");
     });
   });
 
@@ -124,32 +134,35 @@ describe("DIDRegistry", function () {
     beforeEach(async function () {
       // WHY: Setup - register a DID first
       // This is a common pattern: setup state, then test operations on that state
-      await didRegistry.connect(user1).registerDID(sampleDID, sampleDocumentHash);
+      await didRegistry.connect(user1).registerDID(sampleDID, sampleDocumentHash, sampleDocumentURI);
     });
 
-    it("Should allow controller to update DID document hash", async function () {
-      // WHY: Create a new document hash (simulating document update)
+    it("Should allow controller to update DID document", async function () {
+      // WHY: Create a new document hash and URI (simulating document update)
       const newDocumentHash = ethers.keccak256(ethers.toUtf8Bytes("updated-document"));
+      const newDocumentURI = "ipfs://QmNewDocumentHash123456789";
 
       // WHY: Update should succeed and emit event
       await expect(
-        didRegistry.connect(user1).updateDIDDocument(sampleDID, newDocumentHash)
+        didRegistry.connect(user1).updateDIDDocument(sampleDID, newDocumentHash, newDocumentURI)
       )
         .to.emit(didRegistry, "DIDDocumentUpdated")
-        .withArgs(sampleDID, newDocumentHash, sampleDocumentHash);
+        .withArgs(sampleDID, newDocumentHash, newDocumentURI, sampleDocumentHash);
 
       // WHY: Verify the update worked
-      const [, updatedHash] = await didRegistry.resolveDID(sampleDID);
+      const [, updatedHash, updatedURI] = await didRegistry.resolveDID(sampleDID);
       expect(updatedHash).to.equal(newDocumentHash);
+      expect(updatedURI).to.equal(newDocumentURI);
     });
 
     it("Should prevent non-controller from updating", async function () {
       // WHY: This tests access control - only controller can update
       const newDocumentHash = ethers.keccak256(ethers.toUtf8Bytes("malicious-update"));
+      const newDocumentURI = "ipfs://QmMalicious123";
 
       // WHY: user2 should not be able to update user1's DID
       await expect(
-        didRegistry.connect(user2).updateDIDDocument(sampleDID, newDocumentHash)
+        didRegistry.connect(user2).updateDIDDocument(sampleDID, newDocumentHash, newDocumentURI)
       ).to.be.revertedWith("DIDRegistry: Only controller can update");
     });
 
@@ -157,10 +170,20 @@ describe("DIDRegistry", function () {
       // WHY: This tests error handling for invalid operations
       const nonExistentDID = "did:ethr:0x0000000000000000000000000000000000000000";
       const newDocumentHash = ethers.keccak256(ethers.toUtf8Bytes("update"));
+      const newDocumentURI = "ipfs://QmUpdate123";
 
       await expect(
-        didRegistry.connect(user1).updateDIDDocument(nonExistentDID, newDocumentHash)
+        didRegistry.connect(user1).updateDIDDocument(nonExistentDID, newDocumentHash, newDocumentURI)
       ).to.be.revertedWith("DIDRegistry: DID does not exist");
+    });
+
+    it("Should require documentURI when updating", async function () {
+      // WHY: This tests that documentURI is required even for updates
+      const newDocumentHash = ethers.keccak256(ethers.toUtf8Bytes("updated-document"));
+
+      await expect(
+        didRegistry.connect(user1).updateDIDDocument(sampleDID, newDocumentHash, "")
+      ).to.be.revertedWith("DIDRegistry: documentURI cannot be empty");
     });
   });
 
@@ -171,7 +194,7 @@ describe("DIDRegistry", function () {
   describe("Ownership Transfer", function () {
     beforeEach(async function () {
       // WHY: Setup - register a DID first
-      await didRegistry.connect(user1).registerDID(sampleDID, sampleDocumentHash);
+      await didRegistry.connect(user1).registerDID(sampleDID, sampleDocumentHash, sampleDocumentURI);
     });
 
     it("Should allow controller to transfer ownership", async function () {
@@ -201,7 +224,7 @@ describe("DIDRegistry", function () {
     it("Should prevent transferring to address that already has a DID", async function () {
       // WHY: Setup - give user2 their own DID first
       const user2DID = "did:ethr:0x2222222222222222222222222222222222222222";
-      await didRegistry.connect(user2).registerDID(user2DID, sampleDocumentHash);
+      await didRegistry.connect(user2).registerDID(user2DID, sampleDocumentHash, sampleDocumentURI);
 
       // WHY: user1 should not be able to transfer to user2 (who already has a DID)
       // This tests the one-DID-per-address rule
@@ -218,16 +241,18 @@ describe("DIDRegistry", function () {
   describe("Resolution", function () {
     beforeEach(async function () {
       // WHY: Setup - register a DID
-      await didRegistry.connect(user1).registerDID(sampleDID, sampleDocumentHash);
+      await didRegistry.connect(user1).registerDID(sampleDID, sampleDocumentHash, sampleDocumentURI);
     });
 
     it("Should resolve existing DID", async function () {
       // WHY: Test the resolution function
-      const [controller, documentHash, registeredAt, updatedAt] = 
+      // Now includes documentURI - the critical piece for fetching the document!
+      const [controller, documentHash, documentURI, registeredAt, updatedAt] = 
         await didRegistry.resolveDID(sampleDID);
 
       expect(controller).to.equal(user1.address);
       expect(documentHash).to.equal(sampleDocumentHash);
+      expect(documentURI).to.equal(sampleDocumentURI);
       expect(registeredAt).to.be.greaterThan(0);
       expect(updatedAt).to.equal(registeredAt); // Initially same
     });
@@ -235,10 +260,11 @@ describe("DIDRegistry", function () {
     it("Should return zero values for non-existent DID", async function () {
       // WHY: Test error handling - what happens when DID doesn't exist?
       const nonExistentDID = "did:ethr:0x0000000000000000000000000000000000000000";
-      const [controller, documentHash] = await didRegistry.resolveDID(nonExistentDID);
+      const [controller, documentHash, documentURI] = await didRegistry.resolveDID(nonExistentDID);
 
       expect(controller).to.equal(ethers.ZeroAddress);
       expect(documentHash).to.equal(ethers.ZeroHash);
+      expect(documentURI).to.equal(""); // Empty string for non-existent DID
     });
 
     it("Should check if DID exists", async function () {
@@ -272,7 +298,7 @@ describe("DIDRegistry", function () {
       // In production, you'd want stricter validation
       const emptyDID = "";
       await expect(
-        didRegistry.connect(user1).registerDID(emptyDID, sampleDocumentHash)
+        didRegistry.connect(user1).registerDID(emptyDID, sampleDocumentHash, sampleDocumentURI)
       ).to.not.be.reverted; // Current implementation allows this (simplified)
     });
 
@@ -281,7 +307,7 @@ describe("DIDRegistry", function () {
       // Long strings cost more gas
       const longDID = "did:ethr:" + "0".repeat(100);
       await expect(
-        didRegistry.connect(user1).registerDID(longDID, sampleDocumentHash)
+        didRegistry.connect(user1).registerDID(longDID, sampleDocumentHash, sampleDocumentURI)
       ).to.not.be.reverted;
     });
 

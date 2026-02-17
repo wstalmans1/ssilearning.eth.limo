@@ -1,14 +1,17 @@
 # SSI Learning Project: Self-Sovereign Identity Implementation
 
-> **🎓 This is a learning project!** Start with `QUICK_START.md` to begin your SSI learning journey.
+> **🎓 This is a learning project!** Start with `docs/learning/01_QUICK_START.md` to begin your SSI learning journey.
 
 This project guides you through understanding and implementing Self-Sovereign Identity (SSI) from basics to full implementation. Each smart contract includes extensive annotations explaining **what**, **how**, and **why**.
 
 ## 📚 Learning Resources
 
-- **`QUICK_START.md`** - Start here! Quick guide to begin learning
-- **`LEARNING_PATH.md`** - Complete learning journey with all phases
-- **`PHASE_2_IMPLEMENTATION.md`** - Step-by-step guide for Phase 2 (DID Registry)
+All learning documents are in the `docs/learning/` folder (numbered in reading order):
+
+1. **`docs/learning/01_QUICK_START.md`** - Start here! Quick guide to begin learning
+2. **`docs/learning/02_LEARNING_PATH.md`** - Complete learning journey with all phases
+3. **`docs/learning/03_PHASE_2_IMPLEMENTATION.md`** - Step-by-step guide for Phase 2 (DID Registry)
+4. **`docs/learning/04_DID_RESOLUTION_EXPLAINED.md`** - Deep dive into DID resolution and documentURI
 
 ## 🎯 Current Phase: Phase 2 - DID Registry
 

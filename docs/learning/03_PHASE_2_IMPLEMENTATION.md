@@ -7,7 +7,7 @@ Welcome to Phase 2! In this phase, you'll implement and understand a Decentraliz
 Before starting, make sure you've completed:
 - ✅ Phase 0: Foundation concepts
 - ✅ Phase 1: SSI architecture understanding
-- ✅ Read the LEARNING_PATH.md document
+- ✅ Read the `02_LEARNING_PATH.md` document
 
 ## 🎯 Learning Objectives
 
