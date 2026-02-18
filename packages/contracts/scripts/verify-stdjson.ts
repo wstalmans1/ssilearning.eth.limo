@@ -11,22 +11,7 @@ async function main() {
 
   const standardJsonInput = fs.readFileSync(stdJsonPath, "utf8")
 
-  // First try Etherscan (supports standard-json-input)
-  try {
-    await hre.run("verify:verify", {
-      address,
-      contract: contractFullyQualifiedName,
-      constructorArguments: [],
-      libraries: {},
-      standardJsonInput,
-    })
-    console.log("✅ Etherscan verified via standard JSON input")
-    return
-  } catch (e: any) {
-    console.log("❌ Etherscan failed:", e.message || e)
-  }
-
-  // Then try Blockscout; many instances also support standard-json-input
+  console.log("Verifying on Blockscout (submits to Sourcify)…")
   try {
     await hre.run("verify:verify", {
       address,
@@ -36,9 +21,10 @@ async function main() {
       standardJsonInput,
       network: "sepolia-blockscout",
     })
-    console.log("✅ Blockscout verified via standard JSON input")
+    console.log("✅ Blockscout verified via standard JSON input (also available on Sourcify)")
   } catch (e: any) {
     console.log("❌ Blockscout failed:", e.message || e)
+    throw e
   }
 }
 

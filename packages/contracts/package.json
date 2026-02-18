@@ -7,9 +7,10 @@
     "test": "hardhat test",
     "deploy": "hardhat deploy",
     "deploy:tags": "hardhat deploy --tags all",
-    "etherscan-verify": "hardhat etherscan-verify",
+    "verify": "ts-node scripts/verify-multi.ts",
     "docs": "hardhat docgen",
-    "lint:natspec": "solhint 'contracts/**/*.sol' --config .solhint.json"
+    "lint:natspec": "solhint 'contracts/**/*.sol' --config .solhint.json",
+    "slither": "bash scripts/run-slither.sh"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",

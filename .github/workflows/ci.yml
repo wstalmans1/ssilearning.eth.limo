@@ -25,3 +25,10 @@ jobs:
         working-directory: packages/contracts
       - run: pnpm dlx eslint apps/dao-dapp --ext .ts,.tsx
       - run: pnpm --filter contracts exec solhint 'contracts/**/*.sol' || true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Slither static analysis
+        run: |
+          pip install slither-analyzer
+          pnpm contracts:slither

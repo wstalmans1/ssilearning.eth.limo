@@ -5,8 +5,8 @@ async function main() {
   if (!proxyAddress) throw new Error("Usage: ts-node scripts/verify-upgradeable.ts <proxyAddress>")
 
   try {
-    await hre.run("verify:verify", { address: proxyAddress })
-    console.log("✅ Verified proxy address")
+    await hre.run("verify:verify", { address: proxyAddress, network: "sepolia-blockscout" })
+    console.log("✅ Verified proxy on Blockscout (also available on Sourcify)")
   } catch (e: any) {
     console.log("❌ Proxy verification failed:", e.message || e)
   }

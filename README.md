@@ -27,7 +27,7 @@ The project currently includes:
 
 **Frontend**: Vite + React 18 + RainbowKit v2 + wagmi v2 + viem + TanStack Query v5 + Tailwind v4  
 **Contracts**: Hardhat v2 + @nomicfoundation/hardhat-toolbox (ethers v6), OpenZeppelin, TypeChain, hardhat-deploy  
-**DX**: Foundry (Forge/Anvil), gas-reporter, contract-sizer, solidity-docgen (auto, opt-out), Solhint/Prettier, Husky  
+**DX**: Foundry (Forge/Anvil), gas-reporter, contract-sizer, solidity-docgen (auto, opt-out), Solhint/Prettier, Slither, Husky  
 **Documentation**: Comprehensive NatSpec support with linting, validation, and auto-generation (disable with `DOCS_AUTOGEN=false`)  
 **CI**: GitHub Actions
 
@@ -39,7 +39,7 @@ bash setup.sh
 Fill envs:
 
 * `apps/dao-dapp/.env.local`: `VITE_WALLETCONNECT_ID`, RPCs
-* `packages/contracts/.env.hardhat.local`: `PRIVATE_KEY` or `MNEMONIC`, RPCs, `ETHERSCAN_API_KEY`, optional `CMC_API_KEY`
+* `packages/contracts/.env.hardhat.local`: `PRIVATE_KEY` or `MNEMONIC`, RPCs, optional `CMC_API_KEY`
 
 Optional speedups:
 
@@ -68,15 +68,15 @@ Contracts (Hardhat):
 pnpm contracts:compile
 pnpm contracts:test
 pnpm contracts:deploy
-pnpm contracts:verify
-pnpm contracts:verify:multi   # Try both Etherscan and Blockscout
-pnpm contracts:verify:stdjson # Verify via standard JSON input
+pnpm contracts:verify          # Verify on Blockscout (also submits to Sourcify)
+pnpm contracts:verify:stdjson  # Verify via standard JSON input (Blockscout)
 pnpm contracts:debug          # Inspect code size and balance for an address
 pnpm contracts:deploy-upgradeable # Deploy an upgradeable proxy
 pnpm contracts:upgrade        # Upgrade an existing proxy
 pnpm contracts:verify-upgradeable # Verify upgradeable proxy/impl
 pnpm contracts:docs          # Generate Markdown docs from NatSpec (solidity-docgen)
 pnpm contracts:lint:natspec  # Lint NatSpec documentation
+pnpm contracts:slither       # Run Slither static security analysis
 ```
 
 Contracts (Foundry):
@@ -154,3 +154,35 @@ Documentation is written to `packages/contracts/docs` after every compile unless
 NatSpec comments are validated and formatted, ready for documentation generation with tools like:
 - `solidity-docgen` - Default Hardhat-integrated generator (Markdown)
 - `docusaurus` - Full documentation site generator
+
+## 5) Slither Static Analysis
+
+[Slither](https://github.com/crytic/slither) is a Solidity static analysis framework that finds bugs, vulnerabilities, and code quality issues. It runs in CI and can be used locally.
+
+### Prerequisites
+
+- Python 3.8+
+- Install Slither: `pip install slither-analyzer`
+
+### Run locally
+
+```bash
+pnpm contracts:slither
+```
+
+Ensure contracts are compiled first (`pnpm contracts:compile`). The script compiles automatically if needed.
+
+### Configuration
+
+`packages/contracts/slither.config.json` controls:
+- `filter_paths`: Excludes `node_modules` and `@openzeppelin` from results
+- `exclude_optimization`: Skips optimization suggestions (keeps security-focused detectors)
+
+### Understanding results
+
+Slither prints findings by severity (High, Medium, Low, Informational). Each finding includes:
+- A description of the issue
+- The affected contract and line
+- A link to detector documentation
+
+To exclude informational or low-severity findings, edit `slither.config.json` and set `exclude_informational` or `exclude_low` to `true`.

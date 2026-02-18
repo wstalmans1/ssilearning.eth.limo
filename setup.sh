@@ -69,8 +69,7 @@ cat > package.json <<'EOF'
     "contracts:compile": "pnpm --filter contracts run compile",
     "contracts:test": "pnpm --filter contracts run test",
     "contracts:deploy": "pnpm --filter contracts run deploy",
-    "contracts:verify": "pnpm --filter contracts exec hardhat etherscan-verify",
-    "contracts:verify:multi": "pnpm --filter contracts exec ts-node scripts/verify-multi.ts",
+    "contracts:verify": "pnpm --filter contracts exec ts-node scripts/verify-multi.ts",
     "contracts:verify:stdjson": "pnpm --filter contracts exec ts-node scripts/verify-stdjson.ts",
     "contracts:docs": "pnpm --filter contracts run docs",
     "contracts:lint:natspec": "pnpm --filter contracts run lint:natspec",
@@ -217,7 +216,7 @@ cat > packages/contracts/package.json <<'EOF'
     "test": "hardhat test",
     "deploy": "hardhat deploy",
     "deploy:tags": "hardhat deploy --tags all",
-    "etherscan-verify": "hardhat etherscan-verify",
+    "verify": "ts-node scripts/verify-multi.ts",
     "docs": "hardhat docgen",
     "lint:natspec": "solhint 'contracts/**/*.sol' --config .solhint.json"
   }
@@ -329,8 +328,7 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      sepolia: process.env.ETHERSCAN_API_KEY || '',
-      // Blockscout generally ignores API keys; a placeholder keeps plugin happy
+      // Blockscout generally ignores API keys; placeholder keeps verify plugin happy
       'sepolia-blockscout': 'dummy'
     },
     customChains: [
@@ -538,7 +536,7 @@ async function main() {
 main().catch((e) => { console.error(e); process.exit(1) })
 EOF
 
-# Multi-explorer verification scripts
+# Blockscout + Sourcify verification scripts (Blockscout submits to Sourcify)
 cat > packages/contracts/scripts/verify-multi.ts <<'EOF'
 import hre from "hardhat"
 
@@ -549,21 +547,13 @@ async function main() {
   const argsJson = process.argv[3]
   const constructorArgs: any[] = argsJson ? JSON.parse(argsJson) : []
 
-  console.log("Verifying on Etherscan…")
-  try {
-    await hre.run("verify:verify", { address, constructorArguments: constructorArgs })
-    console.log("✅ Etherscan verified")
-    return
-  } catch (e: any) {
-    console.log("❌ Etherscan failed:", e.message || e)
-  }
-
-  console.log("Verifying on Blockscout…")
+  console.log("Verifying on Blockscout (submits to Sourcify)…")
   try {
     await hre.run("verify:verify", { address, network: "sepolia-blockscout", constructorArguments: constructorArgs })
-    console.log("✅ Blockscout verified")
+    console.log("✅ Blockscout verified (also available on Sourcify)")
   } catch (e: any) {
     console.log("❌ Blockscout failed:", e.message || e)
+    throw e
   }
 }
 
@@ -584,22 +574,7 @@ async function main() {
 
   const standardJsonInput = fs.readFileSync(stdJsonPath, "utf8")
 
-  // First try Etherscan (supports standard-json-input)
-  try {
-    await hre.run("verify:verify", {
-      address,
-      contract: contractFullyQualifiedName,
-      constructorArguments: [],
-      libraries: {},
-      standardJsonInput,
-    })
-    console.log("✅ Etherscan verified via standard JSON input")
-    return
-  } catch (e: any) {
-    console.log("❌ Etherscan failed:", e.message || e)
-  }
-
-  // Then try Blockscout; many instances also support standard-json-input
+  console.log("Verifying on Blockscout (submits to Sourcify)…")
   try {
     await hre.run("verify:verify", {
       address,
@@ -609,9 +584,10 @@ async function main() {
       standardJsonInput,
       network: "sepolia-blockscout",
     })
-    console.log("✅ Blockscout verified via standard JSON input")
+    console.log("✅ Blockscout verified via standard JSON input (also available on Sourcify)")
   } catch (e: any) {
     console.log("❌ Blockscout failed:", e.message || e)
+    throw e
   }
 }
 
@@ -631,7 +607,6 @@ OPTIMISM_RPC=
 ARBITRUM_RPC=
 SEPOLIA_RPC=
 
-ETHERSCAN_API_KEY=
 CMC_API_KEY=
 EOF
 cp -f packages/contracts/.env.hardhat.example packages/contracts/.env.hardhat.local
@@ -811,7 +786,7 @@ bash setup.sh
 Fill envs:
 
 * `apps/dao-dapp/.env.local`: `VITE_WALLETCONNECT_ID`, RPCs
-* `packages/contracts/.env.hardhat.local`: `PRIVATE_KEY` or `MNEMONIC`, RPCs, `ETHERSCAN_API_KEY`, optional `CMC_API_KEY`
+* `packages/contracts/.env.hardhat.local`: `PRIVATE_KEY` or `MNEMONIC`, RPCs, optional `CMC_API_KEY`
 
 Optional speedups:
 
@@ -840,9 +815,8 @@ Contracts (Hardhat):
 pnpm contracts:compile
 pnpm contracts:test
 pnpm contracts:deploy
-pnpm contracts:verify
-pnpm contracts:verify:multi   # Try both Etherscan and Blockscout
-pnpm contracts:verify:stdjson # Verify via standard JSON input
+pnpm contracts:verify          # Verify on Blockscout (also submits to Sourcify)
+pnpm contracts:verify:stdjson  # Verify via standard JSON input (Blockscout)
 pnpm contracts:debug          # Inspect code size and balance for an address
 pnpm contracts:deploy-upgradeable # Deploy an upgradeable proxy
 pnpm contracts:upgrade        # Upgrade an existing proxy

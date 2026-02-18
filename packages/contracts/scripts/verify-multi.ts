@@ -7,21 +7,13 @@ async function main() {
   const argsJson = process.argv[3]
   const constructorArgs: any[] = argsJson ? JSON.parse(argsJson) : []
 
-  console.log("Verifying on Etherscan…")
-  try {
-    await hre.run("verify:verify", { address, constructorArguments: constructorArgs })
-    console.log("✅ Etherscan verified")
-    return
-  } catch (e: any) {
-    console.log("❌ Etherscan failed:", e.message || e)
-  }
-
-  console.log("Verifying on Blockscout…")
+  console.log("Verifying on Blockscout (submits to Sourcify)…")
   try {
     await hre.run("verify:verify", { address, network: "sepolia-blockscout", constructorArguments: constructorArgs })
-    console.log("✅ Blockscout verified")
+    console.log("✅ Blockscout verified (also available on Sourcify)")
   } catch (e: any) {
     console.log("❌ Blockscout failed:", e.message || e)
+    throw e
   }
 }
 

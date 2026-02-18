@@ -83,8 +83,7 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      sepolia: process.env.ETHERSCAN_API_KEY || '',
-      // Blockscout generally ignores API keys; a placeholder keeps plugin happy
+      // Blockscout generally ignores API keys; placeholder keeps verify plugin happy
       'sepolia-blockscout': 'dummy'
     },
     customChains: [
