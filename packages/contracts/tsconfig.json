@@ -7,7 +7,7 @@
     "moduleResolution": "Node16",
     "resolveJsonModule": true,
     "outDir": "dist",
-    "types": ["node", "hardhat"]
+    "types": ["node"]
   },
   "include": ["hardhat.config.ts", "deploy", "scripts", "test", "typechain-types"],
   "exclude": ["dist"]
