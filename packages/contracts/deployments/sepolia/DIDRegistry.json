@@ -1,0 +1,521 @@
+{
+  "address": "0x10C41A07A8EC79F1aFaC3f1673aa484055297A7f",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "string",
+          "name": "did",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "newDocumentHash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "newDocumentURI",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "previousDocumentHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "DIDDocumentUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "string",
+          "name": "did",
+          "type": "string"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousController",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newController",
+          "type": "address"
+        }
+      ],
+      "name": "DIDOwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "string",
+          "name": "did",
+          "type": "string"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "controller",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "documentHash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "documentURI",
+          "type": "string"
+        }
+      ],
+      "name": "DIDRegistered",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "did",
+          "type": "string"
+        }
+      ],
+      "name": "didExists",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "controller",
+          "type": "address"
+        }
+      ],
+      "name": "getDIDByController",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "controller",
+          "type": "address"
+        }
+      ],
+      "name": "hasDID",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "did",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "documentHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "documentURI",
+          "type": "string"
+        }
+      ],
+      "name": "registerDID",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "did",
+          "type": "string"
+        }
+      ],
+      "name": "resolveDID",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "controller",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "documentHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "documentURI",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "registeredAt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "updatedAt",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "did",
+          "type": "string"
+        },
+        {
+          "internalType": "address",
+          "name": "newController",
+          "type": "address"
+        }
+      ],
+      "name": "transferDIDOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "did",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "newDocumentHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "string",
+          "name": "newDocumentURI",
+          "type": "string"
+        }
+      ],
+      "name": "updateDIDDocument",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x28f71af1fb1f337e9a344e4acca61dd84c457b34317edbe530e023aa3a47275f",
+  "receipt": {
+    "to": null,
+    "from": "0xD78C12137087D394c0FA49634CAa80D0a1985A8A",
+    "contractAddress": "0x10C41A07A8EC79F1aFaC3f1673aa484055297A7f",
+    "transactionIndex": 98,
+    "gasUsed": "840150",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xe994b2691de175baeaf44909590dc784298775b97c70ef98a72195e4ad621de1",
+    "transactionHash": "0x28f71af1fb1f337e9a344e4acca61dd84c457b34317edbe530e023aa3a47275f",
+    "logs": [],
+    "blockNumber": 10291510,
+    "cumulativeGasUsed": "22317911",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "645e7a9244f442697cb924a483996b74",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.28+commit.7893614a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"string\",\"name\":\"did\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"newDocumentHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"newDocumentURI\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"previousDocumentHash\",\"type\":\"bytes32\"}],\"name\":\"DIDDocumentUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"string\",\"name\":\"did\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousController\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newController\",\"type\":\"address\"}],\"name\":\"DIDOwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"string\",\"name\":\"did\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"controller\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"documentHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"documentURI\",\"type\":\"string\"}],\"name\":\"DIDRegistered\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"did\",\"type\":\"string\"}],\"name\":\"didExists\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"controller\",\"type\":\"address\"}],\"name\":\"getDIDByController\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"controller\",\"type\":\"address\"}],\"name\":\"hasDID\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"did\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"documentHash\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"documentURI\",\"type\":\"string\"}],\"name\":\"registerDID\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"did\",\"type\":\"string\"}],\"name\":\"resolveDID\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"controller\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"documentHash\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"documentURI\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"registeredAt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"updatedAt\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"did\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"newController\",\"type\":\"address\"}],\"name\":\"transferDIDOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"did\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"newDocumentHash\",\"type\":\"bytes32\"},{\"internalType\":\"string\",\"name\":\"newDocumentURI\",\"type\":\"string\"}],\"name\":\"updateDIDDocument\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"This contract implements Phase 2 of the SSI learning path - DID Registry  WHAT THIS CONTRACT DOES: - Registers DIDs (Decentralized Identifiers) on-chain - Associates Ethereum addresses with DIDs - Stores DID Document hashes (not full documents for gas efficiency) - Allows DID owners to update their DID Document hash - Enables DID resolution (looking up a DID to get its document hash)  WHY WE NEED THIS: 1. Decentralization: No single entity controls identity registration 2. Immutability: Once registered, DID ownership can't be falsified 3. Verifiability: Anyone can verify who owns a DID 4. On-chain Resolution: Smart contracts can resolve DIDs to documents  HOW IT WORKS: - Each DID is associated with an Ethereum address (the DID controller) - DID Documents are stored off-chain (IPFS, databases, etc.) - Only the hash of the DID Document is stored on-chain (saves gas) - The hash allows verification that a DID Document hasn't been tampered with  LEARNING NOTES: - This is a simplified DID registry for learning purposes - Real-world DID registries may have additional features (key rotation, service endpoints, etc.) - We use the \\\"ethr\\\" DID method (did:ethr:0x...)\",\"events\":{\"DIDDocumentUpdated(string,bytes32,string,bytes32)\":{\"params\":{\"did\":\"The DID being updated\",\"newDocumentHash\":\"The new hash of the DID Document\",\"newDocumentURI\":\"The new location of the DID Document\",\"previousDocumentHash\":\"The previous hash (for tracking changes)  WHY ALLOW UPDATES: - DID Documents may need to be updated (new keys, new services) - The hash changes when the document changes - The URI may change if document is moved to new location - We track both old and new values for audit purposes\"}},\"DIDOwnershipTransferred(string,address,address)\":{\"params\":{\"did\":\"The DID being transferred\",\"newController\":\"The new owner  WHY ALLOW TRANSFERS: - Users may want to migrate to a new wallet - Organizations may transfer DID control - Important for DID recovery scenarios\",\"previousController\":\"The previous owner\"}},\"DIDRegistered(string,address,bytes32,string)\":{\"params\":{\"controller\":\"The Ethereum address that controls this DID\",\"did\":\"The Decentralized Identifier (e.g., \\\"did:ethr:0x123...\\\")\",\"documentHash\":\"The hash of the DID Document (for verification)\",\"documentURI\":\"The location where the DID Document can be fetched  WHY WE EMIT EVENTS: - Events are cheaper than storage (for historical data) - Frontend apps can listen to events for real-time updates - Events provide a searchable history of DID registrations - documentURI in event allows off-chain indexing without querying storage\"}}},\"kind\":\"dev\",\"methods\":{\"didExists(string)\":{\"params\":{\"did\":\"The DID to check\"},\"returns\":{\"_0\":\"exists True if DID is registered, false otherwise  WHY THIS FUNCTION: - Simple boolean check (more gas efficient than full resolution) - Useful for validation before operations - Clearer intent than checking controller != address(0)\"}},\"getDIDByController(address)\":{\"params\":{\"controller\":\"The address to look up\"},\"returns\":{\"_0\":\"did The DID controlled by this address (empty if none)  WHY THIS FUNCTION: - Frontend: \\\"What's my DID?\\\" - Reverse lookup: Address -> DID - Useful for wallet integrations  NOTE: Returns empty string if address has no DID\"}},\"hasDID(address)\":{\"params\":{\"controller\":\"The address to check\"},\"returns\":{\"_0\":\"hasDID True if address controls a DID, false otherwise  WHY THIS FUNCTION: - Quick check before registration - Useful for UI state management - More readable than checking getDIDByController result\"}},\"registerDID(string,bytes32,string)\":{\"details\":\"Requirements: - DID must not already be registered - Caller must not already control a DID - DID format should be validated (simplified here for learning) - documentURI should not be empty (enables resolution)  HOW IT WORKS: 1. Check if DID already exists (revert if yes) 2. Check if caller already has a DID (revert if yes - simplified) 3. Validate documentURI is not empty (critical for resolution) 4. Store the DID record (including hash AND URI) 5. Store reverse mapping (address -> DID) 6. Emit event for frontend/off-chain systems  COMPLETE RESOLUTION FLOW: 1. Resolver calls resolveDID() \\u2192 gets documentHash and documentURI 2. Resolver fetches document from documentURI (IPFS, HTTP, etc.) 3. Resolver hashes the fetched document 4. Resolver compares: fetched hash == documentHash? \\u2192 Authentic!  GAS COST: ~70,000 - 90,000 gas (depending on DID and URI string lengths)  SECURITY CONSIDERATIONS: - Only the caller can register a DID for themselves - No one can register a DID for someone else - DID format validation is simplified (add more checks in production) - documentURI should point to immutable content (IPFS) or trusted source\",\"params\":{\"did\":\"The Decentralized Identifier (must follow format: \\\"did:ethr:0x...\\\")\",\"documentHash\":\"The hash of the DID Document (SHA-256 recommended)\",\"documentURI\":\"The location where the DID Document can be fetched                    Examples: \\\"ipfs://QmXoypizj...\\\" or \\\"https://example.com/did-docs/123\\\" \"}},\"resolveDID(string)\":{\"params\":{\"did\":\"The DID to resolve\"},\"returns\":{\"controller\":\"The address that controls this DID\",\"documentHash\":\"The hash of the DID Document (for verification)\",\"documentURI\":\"The location where the DID Document can be fetched\",\"registeredAt\":\"When the DID was registered\",\"updatedAt\":\"When the DID was last updated  WHAT IS DID RESOLUTION: - The process of looking up a DID to get its information - Similar to DNS lookup (domain name -> IP address) - Here: DID -> DID Document hash, URI, and controller  COMPLETE RESOLUTION FLOW: 1. Call resolveDID() \\u2192 Get documentHash and documentURI 2. Fetch document from documentURI (IPFS, HTTP, etc.) 3. Hash the fetched document (SHA-256) 4. Compare: fetched hash == documentHash?    - If YES \\u2192 Document is authentic \\u2713    - If NO \\u2192 Document was tampered with \\u2717  WHY THIS FUNCTION: - Enables verifiers to resolve issuer DIDs - Allows checking DID ownership - Provides ALL information needed for complete resolution - documentURI solves the \\\"where to fetch\\\" problem you identified!  GAS COST: ~2,100 gas (warm storage read)\"}},\"transferDIDOwnership(string,address)\":{\"details\":\"Requirements: - DID must exist - Caller must be current controller - New controller must not already have a DID (simplified)  WHY ALLOW TRANSFERS: - Users may migrate to new wallets - Organizations may transfer control - Important for DID recovery scenarios  SECURITY CONSIDERATIONS: - Only current controller can transfer - Consider adding a delay/confirmation for production - Consider multi-sig for important DIDs\",\"params\":{\"did\":\"The DID to transfer\",\"newController\":\"The new controller address \"}},\"updateDIDDocument(string,bytes32,string)\":{\"details\":\"Requirements: - DID must exist - Caller must be the DID controller - newDocumentURI must not be empty  WHY ALLOW UPDATES: - DID Documents may need updates (add new keys, services) - When document changes, hash changes - Document may be moved to new location (new IPFS CID, etc.) - This allows DID evolution without re-registration  USE CASES: - Adding a new public key for authentication - Adding a service endpoint (e.g., credential wallet) - Updating recovery mechanisms - Moving document to new storage location  SECURITY: - Only the controller can update - Old hash is preserved in event for audit trail - Both hash and URI are updated atomically\",\"params\":{\"did\":\"The DID to update\",\"newDocumentHash\":\"The new hash of the DID Document\",\"newDocumentURI\":\"The new location of the DID Document (can be same as before) \"}}},\"stateVariables\":{\"_controllerToDID\":{\"details\":\"Mapping from controller address to DID  WHY THIS MAPPING: - Allows reverse lookup: \\\"What DID does this address control?\\\" - Useful for frontend: \\\"Show me my DID\\\" - Enables one-address-to-one-DID relationship (simplified for learning)  NOTE: In real-world, one address might control multiple DIDs This is simplified for learning purposes\"},\"_dids\":{\"details\":\"Mapping from DID string to DIDRecord  WHY USE MAPPING: - O(1) lookup time (very efficient) - Easy to check if a DID exists (check if controller != address(0)) - Gas efficient for reads  STORAGE COST: - Each DID record costs ~20,000 gas to store - Reading costs ~2,100 gas (warm) or ~100 gas (cold)\"}},\"title\":\"DID Registry\",\"version\":1},\"userdoc\":{\"events\":{\"DIDDocumentUpdated(string,bytes32,string,bytes32)\":{\"notice\":\"Emitted when a DID Document is updated\"},\"DIDOwnershipTransferred(string,address,address)\":{\"notice\":\"Emitted when DID ownership is transferred\"},\"DIDRegistered(string,address,bytes32,string)\":{\"notice\":\"Emitted when a new DID is registered\"}},\"kind\":\"user\",\"methods\":{\"didExists(string)\":{\"notice\":\"Checks if a DID exists\"},\"getDIDByController(address)\":{\"notice\":\"Gets the DID controlled by an address\"},\"hasDID(address)\":{\"notice\":\"Checks if an address controls a DID\"},\"registerDID(string,bytes32,string)\":{\"notice\":\"Registers a new DID\"},\"resolveDID(string)\":{\"notice\":\"Resolves a DID to its record\"},\"transferDIDOwnership(string,address)\":{\"notice\":\"Transfers DID ownership to a new address\"},\"updateDIDDocument(string,bytes32,string)\":{\"notice\":\"Updates the DID Document for an existing DID\"}},\"notice\":\"A decentralized registry for Decentralized Identifiers (DIDs) on Ethereum\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/SSI/DIDRegistry.sol\":\"DIDRegistry\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/SSI/DIDRegistry.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.28;\\n\\n/**\\n * @title DID Registry\\n * @notice A decentralized registry for Decentralized Identifiers (DIDs) on Ethereum\\n * @dev This contract implements Phase 2 of the SSI learning path - DID Registry\\n * \\n * WHAT THIS CONTRACT DOES:\\n * - Registers DIDs (Decentralized Identifiers) on-chain\\n * - Associates Ethereum addresses with DIDs\\n * - Stores DID Document hashes (not full documents for gas efficiency)\\n * - Allows DID owners to update their DID Document hash\\n * - Enables DID resolution (looking up a DID to get its document hash)\\n * \\n * WHY WE NEED THIS:\\n * 1. Decentralization: No single entity controls identity registration\\n * 2. Immutability: Once registered, DID ownership can't be falsified\\n * 3. Verifiability: Anyone can verify who owns a DID\\n * 4. On-chain Resolution: Smart contracts can resolve DIDs to documents\\n * \\n * HOW IT WORKS:\\n * - Each DID is associated with an Ethereum address (the DID controller)\\n * - DID Documents are stored off-chain (IPFS, databases, etc.)\\n * - Only the hash of the DID Document is stored on-chain (saves gas)\\n * - The hash allows verification that a DID Document hasn't been tampered with\\n * \\n * LEARNING NOTES:\\n * - This is a simplified DID registry for learning purposes\\n * - Real-world DID registries may have additional features (key rotation, service endpoints, etc.)\\n * - We use the \\\"ethr\\\" DID method (did:ethr:0x...)\\n */\\ncontract DIDRegistry {\\n    /**\\n     * @notice Emitted when a new DID is registered\\n     * @param did The Decentralized Identifier (e.g., \\\"did:ethr:0x123...\\\")\\n     * @param controller The Ethereum address that controls this DID\\n     * @param documentHash The hash of the DID Document (for verification)\\n     * @param documentURI The location where the DID Document can be fetched\\n     * \\n     * WHY WE EMIT EVENTS:\\n     * - Events are cheaper than storage (for historical data)\\n     * - Frontend apps can listen to events for real-time updates\\n     * - Events provide a searchable history of DID registrations\\n     * - documentURI in event allows off-chain indexing without querying storage\\n     */\\n    event DIDRegistered(\\n        string indexed did,\\n        address indexed controller,\\n        bytes32 documentHash,\\n        string documentURI\\n    );\\n\\n    /**\\n     * @notice Emitted when a DID Document is updated\\n     * @param did The DID being updated\\n     * @param newDocumentHash The new hash of the DID Document\\n     * @param newDocumentURI The new location of the DID Document\\n     * @param previousDocumentHash The previous hash (for tracking changes)\\n     * \\n     * WHY ALLOW UPDATES:\\n     * - DID Documents may need to be updated (new keys, new services)\\n     * - The hash changes when the document changes\\n     * - The URI may change if document is moved to new location\\n     * - We track both old and new values for audit purposes\\n     */\\n    event DIDDocumentUpdated(\\n        string indexed did,\\n        bytes32 newDocumentHash,\\n        string newDocumentURI,\\n        bytes32 previousDocumentHash\\n    );\\n\\n    /**\\n     * @notice Emitted when DID ownership is transferred\\n     * @param did The DID being transferred\\n     * @param previousController The previous owner\\n     * @param newController The new owner\\n     * \\n     * WHY ALLOW TRANSFERS:\\n     * - Users may want to migrate to a new wallet\\n     * - Organizations may transfer DID control\\n     * - Important for DID recovery scenarios\\n     */\\n    event DIDOwnershipTransferred(\\n        string indexed did,\\n        address indexed previousController,\\n        address indexed newController\\n    );\\n\\n    /**\\n     * @dev Structure to store DID information\\n     * \\n     * WHY THIS STRUCTURE:\\n     * - controller: The Ethereum address that owns/controls this DID\\n     * - documentHash: Hash of the DID Document (for verification)\\n     * - documentURI: Location where the DID Document can be fetched (IPFS CID, HTTP URL, etc.)\\n     * - registeredAt: Timestamp of registration (useful for analytics)\\n     * - updatedAt: Last update timestamp (for tracking changes)\\n     * \\n     * WHY STORE documentURI:\\n     * - CRITICAL: Without this, resolvers don't know WHERE to fetch the document!\\n     * - Enables complete DID resolution: hash tells you WHAT to verify, URI tells you WHERE to get it\\n     * - Can store IPFS CID (ipfs://Qm...), HTTP URL (https://...), or any URI format\\n     * \\n     * TRADE-OFF:\\n     * - Costs extra gas (~20,000 gas for string storage)\\n     * - But enables direct on-chain resolution without off-chain infrastructure\\n     * - Alternative: Store URI in events (cheaper but requires indexing)\\n     * \\n     * WHY STORE TIMESTAMPS:\\n     * - Useful for auditing and compliance\\n     * - Can be used to detect suspicious activity\\n     * - Helps with credential expiration logic\\n     */\\n    struct DIDRecord {\\n        address controller;        // Who controls this DID\\n        bytes32 documentHash;      // Hash of the DID Document (for verification)\\n        string documentURI;        // Where to fetch the DID Document (e.g., \\\"ipfs://Qm...\\\" or \\\"https://...\\\")\\n        uint256 registeredAt;      // When was this DID registered\\n        uint256 updatedAt;         // When was it last updated\\n    }\\n\\n    /**\\n     * @dev Mapping from DID string to DIDRecord\\n     * \\n     * WHY USE MAPPING:\\n     * - O(1) lookup time (very efficient)\\n     * - Easy to check if a DID exists (check if controller != address(0))\\n     * - Gas efficient for reads\\n     * \\n     * STORAGE COST:\\n     * - Each DID record costs ~20,000 gas to store\\n     * - Reading costs ~2,100 gas (warm) or ~100 gas (cold)\\n     */\\n    mapping(string => DIDRecord) private _dids;\\n\\n    /**\\n     * @dev Mapping from controller address to DID\\n     * \\n     * WHY THIS MAPPING:\\n     * - Allows reverse lookup: \\\"What DID does this address control?\\\"\\n     * - Useful for frontend: \\\"Show me my DID\\\"\\n     * - Enables one-address-to-one-DID relationship (simplified for learning)\\n     * \\n     * NOTE: In real-world, one address might control multiple DIDs\\n     * This is simplified for learning purposes\\n     */\\n    mapping(address => string) private _controllerToDID;\\n\\n    /**\\n     * @notice Registers a new DID\\n     * @param did The Decentralized Identifier (must follow format: \\\"did:ethr:0x...\\\")\\n     * @param documentHash The hash of the DID Document (SHA-256 recommended)\\n     * @param documentURI The location where the DID Document can be fetched\\n     *                    Examples: \\\"ipfs://QmXoypizj...\\\" or \\\"https://example.com/did-docs/123\\\"\\n     * \\n     * @dev Requirements:\\n     * - DID must not already be registered\\n     * - Caller must not already control a DID\\n     * - DID format should be validated (simplified here for learning)\\n     * - documentURI should not be empty (enables resolution)\\n     * \\n     * HOW IT WORKS:\\n     * 1. Check if DID already exists (revert if yes)\\n     * 2. Check if caller already has a DID (revert if yes - simplified)\\n     * 3. Validate documentURI is not empty (critical for resolution)\\n     * 4. Store the DID record (including hash AND URI)\\n     * 5. Store reverse mapping (address -> DID)\\n     * 6. Emit event for frontend/off-chain systems\\n     * \\n     * COMPLETE RESOLUTION FLOW:\\n     * 1. Resolver calls resolveDID() \\u2192 gets documentHash and documentURI\\n     * 2. Resolver fetches document from documentURI (IPFS, HTTP, etc.)\\n     * 3. Resolver hashes the fetched document\\n     * 4. Resolver compares: fetched hash == documentHash? \\u2192 Authentic!\\n     * \\n     * GAS COST: ~70,000 - 90,000 gas (depending on DID and URI string lengths)\\n     * \\n     * SECURITY CONSIDERATIONS:\\n     * - Only the caller can register a DID for themselves\\n     * - No one can register a DID for someone else\\n     * - DID format validation is simplified (add more checks in production)\\n     * - documentURI should point to immutable content (IPFS) or trusted source\\n     */\\n    function registerDID(\\n        string memory did,\\n        bytes32 documentHash,\\n        string memory documentURI\\n    ) external {\\n        // WHY CHECK: Prevent overwriting existing DIDs\\n        // This ensures DID uniqueness (critical for identity systems)\\n        require(\\n            _dids[did].controller == address(0),\\n            \\\"DIDRegistry: DID already registered\\\"\\n        );\\n\\n        // WHY CHECK: Simplified - one address = one DID\\n        // In production, you might allow multiple DIDs per address\\n        require(\\n            bytes(_controllerToDID[msg.sender]).length == 0,\\n            \\\"DIDRegistry: Address already has a DID\\\"\\n        );\\n\\n        // WHY CHECK: documentURI is critical - without it, resolvers can't fetch the document!\\n        // This solves the \\\"chicken and egg\\\" problem you identified\\n        require(\\n            bytes(documentURI).length > 0,\\n            \\\"DIDRegistry: documentURI cannot be empty\\\"\\n        );\\n\\n        // WHY STORE TIMESTAMP: Useful for auditing and analytics\\n        uint256 timestamp = block.timestamp;\\n\\n        // Store the DID record\\n        // WHY STRUCT: Groups related data together, easier to manage\\n        _dids[did] = DIDRecord({\\n            controller: msg.sender,        // The caller owns this DID\\n            documentHash: documentHash,   // Hash of document (for verification)\\n            documentURI: documentURI,     // Where to fetch the document (IPFS, HTTP, etc.)\\n            registeredAt: timestamp,      // When registered\\n            updatedAt: timestamp          // Initially same as registered\\n        });\\n\\n        // Store reverse mapping for efficient lookup\\n        // WHY: Allows \\\"what DID does this address control?\\\" queries\\n        _controllerToDID[msg.sender] = did;\\n\\n        // WHY EMIT EVENT: Cheaper than storage, enables off-chain indexing\\n        // Includes documentURI so indexers can build DID \\u2192 Location databases\\n        emit DIDRegistered(did, msg.sender, documentHash, documentURI);\\n    }\\n\\n    /**\\n     * @notice Updates the DID Document for an existing DID\\n     * @param did The DID to update\\n     * @param newDocumentHash The new hash of the DID Document\\n     * @param newDocumentURI The new location of the DID Document (can be same as before)\\n     * \\n     * @dev Requirements:\\n     * - DID must exist\\n     * - Caller must be the DID controller\\n     * - newDocumentURI must not be empty\\n     * \\n     * WHY ALLOW UPDATES:\\n     * - DID Documents may need updates (add new keys, services)\\n     * - When document changes, hash changes\\n     * - Document may be moved to new location (new IPFS CID, etc.)\\n     * - This allows DID evolution without re-registration\\n     * \\n     * USE CASES:\\n     * - Adding a new public key for authentication\\n     * - Adding a service endpoint (e.g., credential wallet)\\n     * - Updating recovery mechanisms\\n     * - Moving document to new storage location\\n     * \\n     * SECURITY:\\n     * - Only the controller can update\\n     * - Old hash is preserved in event for audit trail\\n     * - Both hash and URI are updated atomically\\n     */\\n    function updateDIDDocument(\\n        string memory did,\\n        bytes32 newDocumentHash,\\n        string memory newDocumentURI\\n    ) external {\\n        // WHY CHECK: Ensure DID exists\\n        DIDRecord storage record = _dids[did];\\n        require(\\n            record.controller != address(0),\\n            \\\"DIDRegistry: DID does not exist\\\"\\n        );\\n\\n        // WHY CHECK: Only controller can update\\n        // This is critical for security - prevents unauthorized changes\\n        require(\\n            record.controller == msg.sender,\\n            \\\"DIDRegistry: Only controller can update\\\"\\n        );\\n\\n        // WHY CHECK: documentURI is required for resolution\\n        require(\\n            bytes(newDocumentURI).length > 0,\\n            \\\"DIDRegistry: documentURI cannot be empty\\\"\\n        );\\n\\n        // WHY STORE OLD HASH: For audit trail and event emission\\n        bytes32 previousHash = record.documentHash;\\n\\n        // Update both hash and URI atomically\\n        // WHY ATOMIC: Ensures hash and URI always match\\n        record.documentHash = newDocumentHash;\\n        record.documentURI = newDocumentURI;\\n        record.updatedAt = block.timestamp;\\n\\n        // WHY EMIT EVENT: Track all updates for auditing\\n        emit DIDDocumentUpdated(did, newDocumentHash, newDocumentURI, previousHash);\\n    }\\n\\n    /**\\n     * @notice Transfers DID ownership to a new address\\n     * @param did The DID to transfer\\n     * @param newController The new controller address\\n     * \\n     * @dev Requirements:\\n     * - DID must exist\\n     * - Caller must be current controller\\n     * - New controller must not already have a DID (simplified)\\n     * \\n     * WHY ALLOW TRANSFERS:\\n     * - Users may migrate to new wallets\\n     * - Organizations may transfer control\\n     * - Important for DID recovery scenarios\\n     * \\n     * SECURITY CONSIDERATIONS:\\n     * - Only current controller can transfer\\n     * - Consider adding a delay/confirmation for production\\n     * - Consider multi-sig for important DIDs\\n     */\\n    function transferDIDOwnership(string memory did, address newController)\\n        external\\n    {\\n        // WHY CHECK: Ensure DID exists\\n        DIDRecord storage record = _dids[did];\\n        require(\\n            record.controller != address(0),\\n            \\\"DIDRegistry: DID does not exist\\\"\\n        );\\n\\n        // WHY CHECK: Only controller can transfer\\n        require(\\n            record.controller == msg.sender,\\n            \\\"DIDRegistry: Only controller can transfer\\\"\\n        );\\n\\n        // WHY CHECK: Prevent overwriting (simplified - one DID per address)\\n        require(\\n            bytes(_controllerToDID[newController]).length == 0,\\n            \\\"DIDRegistry: New controller already has a DID\\\"\\n        );\\n\\n        // WHY STORE OLD CONTROLLER: For event emission\\n        address previousController = record.controller;\\n\\n        // Update reverse mapping\\n        delete _controllerToDID[previousController];\\n        _controllerToDID[newController] = did;\\n\\n        // Transfer ownership\\n        record.controller = newController;\\n        record.updatedAt = block.timestamp;\\n\\n        // WHY EMIT EVENT: Track ownership changes\\n        emit DIDOwnershipTransferred(did, previousController, newController);\\n    }\\n\\n    /**\\n     * @notice Resolves a DID to its record\\n     * @param did The DID to resolve\\n     * @return controller The address that controls this DID\\n     * @return documentHash The hash of the DID Document (for verification)\\n     * @return documentURI The location where the DID Document can be fetched\\n     * @return registeredAt When the DID was registered\\n     * @return updatedAt When the DID was last updated\\n     * \\n     * WHAT IS DID RESOLUTION:\\n     * - The process of looking up a DID to get its information\\n     * - Similar to DNS lookup (domain name -> IP address)\\n     * - Here: DID -> DID Document hash, URI, and controller\\n     * \\n     * COMPLETE RESOLUTION FLOW:\\n     * 1. Call resolveDID() \\u2192 Get documentHash and documentURI\\n     * 2. Fetch document from documentURI (IPFS, HTTP, etc.)\\n     * 3. Hash the fetched document (SHA-256)\\n     * 4. Compare: fetched hash == documentHash?\\n     *    - If YES \\u2192 Document is authentic \\u2713\\n     *    - If NO \\u2192 Document was tampered with \\u2717\\n     * \\n     * WHY THIS FUNCTION:\\n     * - Enables verifiers to resolve issuer DIDs\\n     * - Allows checking DID ownership\\n     * - Provides ALL information needed for complete resolution\\n     * - documentURI solves the \\\"where to fetch\\\" problem you identified!\\n     * \\n     * GAS COST: ~2,100 gas (warm storage read)\\n     */\\n    function resolveDID(string memory did)\\n        external\\n        view\\n        returns (\\n            address controller,\\n            bytes32 documentHash,\\n            string memory documentURI,\\n            uint256 registeredAt,\\n            uint256 updatedAt\\n        )\\n    {\\n        // WHY CHECK: Return zero values if DID doesn't exist\\n        // This allows callers to check if DID exists\\n        DIDRecord memory record = _dids[did];\\n        \\n        return (\\n            record.controller,\\n            record.documentHash,\\n            record.documentURI,\\n            record.registeredAt,\\n            record.updatedAt\\n        );\\n    }\\n\\n    /**\\n     * @notice Gets the DID controlled by an address\\n     * @param controller The address to look up\\n     * @return did The DID controlled by this address (empty if none)\\n     * \\n     * WHY THIS FUNCTION:\\n     * - Frontend: \\\"What's my DID?\\\"\\n     * - Reverse lookup: Address -> DID\\n     * - Useful for wallet integrations\\n     * \\n     * NOTE: Returns empty string if address has no DID\\n     */\\n    function getDIDByController(address controller)\\n        external\\n        view\\n        returns (string memory)\\n    {\\n        return _controllerToDID[controller];\\n    }\\n\\n    /**\\n     * @notice Checks if a DID exists\\n     * @param did The DID to check\\n     * @return exists True if DID is registered, false otherwise\\n     * \\n     * WHY THIS FUNCTION:\\n     * - Simple boolean check (more gas efficient than full resolution)\\n     * - Useful for validation before operations\\n     * - Clearer intent than checking controller != address(0)\\n     */\\n    function didExists(string memory did) external view returns (bool) {\\n        return _dids[did].controller != address(0);\\n    }\\n\\n    /**\\n     * @notice Checks if an address controls a DID\\n     * @param controller The address to check\\n     * @return hasDID True if address controls a DID, false otherwise\\n     * \\n     * WHY THIS FUNCTION:\\n     * - Quick check before registration\\n     * - Useful for UI state management\\n     * - More readable than checking getDIDByController result\\n     */\\n    function hasDID(address controller) external view returns (bool) {\\n        return bytes(_controllerToDID[controller]).length > 0;\\n    }\\n}\\n\\n\",\"keccak256\":\"0x5a359a764542891d28c047243ba5e872345bf01d35d3abd022829cad4bca5b21\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50610e3b8061001f6000396000f3fe608060405234801561001057600080fd5b506004361061007d5760003560e01c80637586f9651161005b5780637586f965146100d25780638f5630aa146100e55780639d7f0bbf14610105578063d0f4b30a1461012957600080fd5b806320dd57a91461008257806345b750d0146100aa57806357a7c933146100bf575b600080fd5b610095610090366004610a3e565b61013c565b60405190151581526020015b60405180910390f35b6100bd6100b8366004610a97565b610179565b005b6100bd6100cd366004610ae5565b61039a565b6100bd6100e0366004610ae5565b610515565b6100f86100f3366004610b57565b610744565b6040516100a19190610bc9565b610118610113366004610a3e565b6107f0565b6040516100a1959493929190610bdc565b610095610137366004610b57565b610913565b6000806001600160a01b03166000836040516101589190610c17565b908152604051908190036020019020546001600160a01b0316141592915050565b6000808360405161018a9190610c17565b90815260405190819003602001902080549091506001600160a01b03166101f85760405162461bcd60e51b815260206004820152601f60248201527f44494452656769737472793a2044494420646f6573206e6f742065786973740060448201526064015b60405180910390fd5b80546001600160a01b031633146102635760405162461bcd60e51b815260206004820152602960248201527f44494452656769737472793a204f6e6c7920636f6e74726f6c6c65722063616e604482015268103a3930b739b332b960b91b60648201526084016101ef565b6001600160a01b0382166000908152600160205260409020805461028690610c33565b1590506102eb5760405162461bcd60e51b815260206004820152602d60248201527f44494452656769737472793a204e657720636f6e74726f6c6c657220616c726560448201526c18591e481a185cc81848111251609a1b60648201526084016101ef565b80546001600160a01b0316600081815260016020526040812061030d91610943565b6001600160a01b038316600090815260016020526040902061032f8582610cbc565b5081546001600160a01b0319166001600160a01b03848116918217845542600485015560405190831690610364908790610c17565b604051908190038120907f6685cec1864dc6f626b6a230181bb6a4f5eca5abe1a89ca18115f90c1737969c90600090a450505050565b600080846040516103ab9190610c17565b90815260405190819003602001902080549091506001600160a01b03166104145760405162461bcd60e51b815260206004820152601f60248201527f44494452656769737472793a2044494420646f6573206e6f742065786973740060448201526064016101ef565b80546001600160a01b0316331461047d5760405162461bcd60e51b815260206004820152602760248201527f44494452656769737472793a204f6e6c7920636f6e74726f6c6c65722063616e6044820152662075706461746560c81b60648201526084016101ef565b600082511161049e5760405162461bcd60e51b81526004016101ef90610d7b565b60018101805490849055600282016104b68482610cbc565b504260048301556040516104cb908690610c17565b60405180910390207f869d9b8e45f706a271047f11389a54d3c41f1a92ec6a9c9e78b908803ab6473785858460405161050693929190610dc3565b60405180910390a25050505050565b60006001600160a01b03166000846040516105309190610c17565b908152604051908190036020019020546001600160a01b0316146105a25760405162461bcd60e51b815260206004820152602360248201527f44494452656769737472793a2044494420616c726561647920726567697374656044820152621c995960ea1b60648201526084016101ef565b33600090815260016020526040902080546105bc90610c33565b15905061061a5760405162461bcd60e51b815260206004820152602660248201527f44494452656769737472793a204164647265737320616c72656164792068617360448201526508184811125160d21b60648201526084016101ef565b600081511161063b5760405162461bcd60e51b81526004016101ef90610d7b565b6040805160a081018252338152602081018490528082018390524260608201819052608082018190529151600090610674908790610c17565b9081526040805160209281900383019020835181546001600160a01b0319166001600160a01b0390911617815591830151600183015582015160028201906106bc9082610cbc565b50606082015160038201556080909101516004909101553360009081526001602052604090206106ec8582610cbc565b5060405133906106fd908690610c17565b60405180910390207f8fedb7557c2f9703f8f7d5c4b27da92c11be43a5611f1d0e82cedc46d07bbc6e8585604051610736929190610dec565b60405180910390a350505050565b6001600160a01b038116600090815260016020526040902080546060919061076b90610c33565b80601f016020809104026020016040519081016040528092919081815260200182805461079790610c33565b80156107e45780601f106107b9576101008083540402835291602001916107e4565b820191906000526020600020905b8154815290600101906020018083116107c757829003601f168201915b50505050509050919050565b6000806060600080600080876040516108099190610c17565b90815260408051918290036020908101832060a08401835280546001600160a01b03168452600181015491840191909152600281018054919284019161084e90610c33565b80601f016020809104026020016040519081016040528092919081815260200182805461087a90610c33565b80156108c75780601f1061089c576101008083540402835291602001916108c7565b820191906000526020600020905b8154815290600101906020018083116108aa57829003601f168201915b5050505050815260200160038201548152602001600482015481525050905080600001518160200151826040015183606001518460800151955095509550955095505091939590929450565b6001600160a01b0381166000908152600160205260408120805482919061093990610c33565b9050119050919050565b50805461094f90610c33565b6000825580601f1061095f575050565b601f01602090049060005260206000209081019061097d9190610980565b50565b5b808211156109955760008155600101610981565b5090565b634e487b7160e01b600052604160045260246000fd5b600082601f8301126109c057600080fd5b813567ffffffffffffffff8111156109da576109da610999565b604051601f8201601f19908116603f0116810167ffffffffffffffff81118282101715610a0957610a09610999565b604052818152838201602001851015610a2157600080fd5b816020850160208301376000918101602001919091529392505050565b600060208284031215610a5057600080fd5b813567ffffffffffffffff811115610a6757600080fd5b610a73848285016109af565b949350505050565b80356001600160a01b0381168114610a9257600080fd5b919050565b60008060408385031215610aaa57600080fd5b823567ffffffffffffffff811115610ac157600080fd5b610acd858286016109af565b925050610adc60208401610a7b565b90509250929050565b600080600060608486031215610afa57600080fd5b833567ffffffffffffffff811115610b1157600080fd5b610b1d868287016109af565b93505060208401359150604084013567ffffffffffffffff811115610b4157600080fd5b610b4d868287016109af565b9150509250925092565b600060208284031215610b6957600080fd5b610b7282610a7b565b9392505050565b60005b83811015610b94578181015183820152602001610b7c565b50506000910152565b60008151808452610bb5816020860160208601610b79565b601f01601f19169290920160200192915050565b602081526000610b726020830184610b9d565b60018060a01b038616815284602082015260a060408201526000610c0360a0830186610b9d565b606083019490945250608001529392505050565b60008251610c29818460208701610b79565b9190910192915050565b600181811c90821680610c4757607f821691505b602082108103610c6757634e487b7160e01b600052602260045260246000fd5b50919050565b601f821115610cb757806000526020600020601f840160051c81016020851015610c945750805b601f840160051c820191505b81811015610cb45760008155600101610ca0565b50505b505050565b815167ffffffffffffffff811115610cd657610cd6610999565b610cea81610ce48454610c33565b84610c6d565b6020601f821160018114610d1e5760008315610d065750848201515b600019600385901b1c1916600184901b178455610cb4565b600084815260208120601f198516915b82811015610d4e5787850151825560209485019460019092019101610d2e565b5084821015610d6c5786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b60208082526028908201527f44494452656769737472793a20646f63756d656e745552492063616e6e6f7420604082015267626520656d70747960c01b606082015260800190565b838152606060208201526000610ddc6060830185610b9d565b9050826040830152949350505050565b828152604060208201526000610a736040830184610b9d56fea26469706673582212209ff0eafa6d83383c8b3f88456918de142c76982a54f052d87952016e9453052a64736f6c634300081c0033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061007d5760003560e01c80637586f9651161005b5780637586f965146100d25780638f5630aa146100e55780639d7f0bbf14610105578063d0f4b30a1461012957600080fd5b806320dd57a91461008257806345b750d0146100aa57806357a7c933146100bf575b600080fd5b610095610090366004610a3e565b61013c565b60405190151581526020015b60405180910390f35b6100bd6100b8366004610a97565b610179565b005b6100bd6100cd366004610ae5565b61039a565b6100bd6100e0366004610ae5565b610515565b6100f86100f3366004610b57565b610744565b6040516100a19190610bc9565b610118610113366004610a3e565b6107f0565b6040516100a1959493929190610bdc565b610095610137366004610b57565b610913565b6000806001600160a01b03166000836040516101589190610c17565b908152604051908190036020019020546001600160a01b0316141592915050565b6000808360405161018a9190610c17565b90815260405190819003602001902080549091506001600160a01b03166101f85760405162461bcd60e51b815260206004820152601f60248201527f44494452656769737472793a2044494420646f6573206e6f742065786973740060448201526064015b60405180910390fd5b80546001600160a01b031633146102635760405162461bcd60e51b815260206004820152602960248201527f44494452656769737472793a204f6e6c7920636f6e74726f6c6c65722063616e604482015268103a3930b739b332b960b91b60648201526084016101ef565b6001600160a01b0382166000908152600160205260409020805461028690610c33565b1590506102eb5760405162461bcd60e51b815260206004820152602d60248201527f44494452656769737472793a204e657720636f6e74726f6c6c657220616c726560448201526c18591e481a185cc81848111251609a1b60648201526084016101ef565b80546001600160a01b0316600081815260016020526040812061030d91610943565b6001600160a01b038316600090815260016020526040902061032f8582610cbc565b5081546001600160a01b0319166001600160a01b03848116918217845542600485015560405190831690610364908790610c17565b604051908190038120907f6685cec1864dc6f626b6a230181bb6a4f5eca5abe1a89ca18115f90c1737969c90600090a450505050565b600080846040516103ab9190610c17565b90815260405190819003602001902080549091506001600160a01b03166104145760405162461bcd60e51b815260206004820152601f60248201527f44494452656769737472793a2044494420646f6573206e6f742065786973740060448201526064016101ef565b80546001600160a01b0316331461047d5760405162461bcd60e51b815260206004820152602760248201527f44494452656769737472793a204f6e6c7920636f6e74726f6c6c65722063616e6044820152662075706461746560c81b60648201526084016101ef565b600082511161049e5760405162461bcd60e51b81526004016101ef90610d7b565b60018101805490849055600282016104b68482610cbc565b504260048301556040516104cb908690610c17565b60405180910390207f869d9b8e45f706a271047f11389a54d3c41f1a92ec6a9c9e78b908803ab6473785858460405161050693929190610dc3565b60405180910390a25050505050565b60006001600160a01b03166000846040516105309190610c17565b908152604051908190036020019020546001600160a01b0316146105a25760405162461bcd60e51b815260206004820152602360248201527f44494452656769737472793a2044494420616c726561647920726567697374656044820152621c995960ea1b60648201526084016101ef565b33600090815260016020526040902080546105bc90610c33565b15905061061a5760405162461bcd60e51b815260206004820152602660248201527f44494452656769737472793a204164647265737320616c72656164792068617360448201526508184811125160d21b60648201526084016101ef565b600081511161063b5760405162461bcd60e51b81526004016101ef90610d7b565b6040805160a081018252338152602081018490528082018390524260608201819052608082018190529151600090610674908790610c17565b9081526040805160209281900383019020835181546001600160a01b0319166001600160a01b0390911617815591830151600183015582015160028201906106bc9082610cbc565b50606082015160038201556080909101516004909101553360009081526001602052604090206106ec8582610cbc565b5060405133906106fd908690610c17565b60405180910390207f8fedb7557c2f9703f8f7d5c4b27da92c11be43a5611f1d0e82cedc46d07bbc6e8585604051610736929190610dec565b60405180910390a350505050565b6001600160a01b038116600090815260016020526040902080546060919061076b90610c33565b80601f016020809104026020016040519081016040528092919081815260200182805461079790610c33565b80156107e45780601f106107b9576101008083540402835291602001916107e4565b820191906000526020600020905b8154815290600101906020018083116107c757829003601f168201915b50505050509050919050565b6000806060600080600080876040516108099190610c17565b90815260408051918290036020908101832060a08401835280546001600160a01b03168452600181015491840191909152600281018054919284019161084e90610c33565b80601f016020809104026020016040519081016040528092919081815260200182805461087a90610c33565b80156108c75780601f1061089c576101008083540402835291602001916108c7565b820191906000526020600020905b8154815290600101906020018083116108aa57829003601f168201915b5050505050815260200160038201548152602001600482015481525050905080600001518160200151826040015183606001518460800151955095509550955095505091939590929450565b6001600160a01b0381166000908152600160205260408120805482919061093990610c33565b9050119050919050565b50805461094f90610c33565b6000825580601f1061095f575050565b601f01602090049060005260206000209081019061097d9190610980565b50565b5b808211156109955760008155600101610981565b5090565b634e487b7160e01b600052604160045260246000fd5b600082601f8301126109c057600080fd5b813567ffffffffffffffff8111156109da576109da610999565b604051601f8201601f19908116603f0116810167ffffffffffffffff81118282101715610a0957610a09610999565b604052818152838201602001851015610a2157600080fd5b816020850160208301376000918101602001919091529392505050565b600060208284031215610a5057600080fd5b813567ffffffffffffffff811115610a6757600080fd5b610a73848285016109af565b949350505050565b80356001600160a01b0381168114610a9257600080fd5b919050565b60008060408385031215610aaa57600080fd5b823567ffffffffffffffff811115610ac157600080fd5b610acd858286016109af565b925050610adc60208401610a7b565b90509250929050565b600080600060608486031215610afa57600080fd5b833567ffffffffffffffff811115610b1157600080fd5b610b1d868287016109af565b93505060208401359150604084013567ffffffffffffffff811115610b4157600080fd5b610b4d868287016109af565b9150509250925092565b600060208284031215610b6957600080fd5b610b7282610a7b565b9392505050565b60005b83811015610b94578181015183820152602001610b7c565b50506000910152565b60008151808452610bb5816020860160208601610b79565b601f01601f19169290920160200192915050565b602081526000610b726020830184610b9d565b60018060a01b038616815284602082015260a060408201526000610c0360a0830186610b9d565b606083019490945250608001529392505050565b60008251610c29818460208701610b79565b9190910192915050565b600181811c90821680610c4757607f821691505b602082108103610c6757634e487b7160e01b600052602260045260246000fd5b50919050565b601f821115610cb757806000526020600020601f840160051c81016020851015610c945750805b601f840160051c820191505b81811015610cb45760008155600101610ca0565b50505b505050565b815167ffffffffffffffff811115610cd657610cd6610999565b610cea81610ce48454610c33565b84610c6d565b6020601f821160018114610d1e5760008315610d065750848201515b600019600385901b1c1916600184901b178455610cb4565b600084815260208120601f198516915b82811015610d4e5787850151825560209485019460019092019101610d2e565b5084821015610d6c5786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b60208082526028908201527f44494452656769737472793a20646f63756d656e745552492063616e6e6f7420604082015267626520656d70747960c01b606082015260800190565b838152606060208201526000610ddc6060830185610b9d565b9050826040830152949350505050565b828152604060208201526000610a736040830184610b9d56fea26469706673582212209ff0eafa6d83383c8b3f88456918de142c76982a54f052d87952016e9453052a64736f6c634300081c0033",
+  "devdoc": {
+    "details": "This contract implements Phase 2 of the SSI learning path - DID Registry  WHAT THIS CONTRACT DOES: - Registers DIDs (Decentralized Identifiers) on-chain - Associates Ethereum addresses with DIDs - Stores DID Document hashes (not full documents for gas efficiency) - Allows DID owners to update their DID Document hash - Enables DID resolution (looking up a DID to get its document hash)  WHY WE NEED THIS: 1. Decentralization: No single entity controls identity registration 2. Immutability: Once registered, DID ownership can't be falsified 3. Verifiability: Anyone can verify who owns a DID 4. On-chain Resolution: Smart contracts can resolve DIDs to documents  HOW IT WORKS: - Each DID is associated with an Ethereum address (the DID controller) - DID Documents are stored off-chain (IPFS, databases, etc.) - Only the hash of the DID Document is stored on-chain (saves gas) - The hash allows verification that a DID Document hasn't been tampered with  LEARNING NOTES: - This is a simplified DID registry for learning purposes - Real-world DID registries may have additional features (key rotation, service endpoints, etc.) - We use the \"ethr\" DID method (did:ethr:0x...)",
+    "events": {
+      "DIDDocumentUpdated(string,bytes32,string,bytes32)": {
+        "params": {
+          "did": "The DID being updated",
+          "newDocumentHash": "The new hash of the DID Document",
+          "newDocumentURI": "The new location of the DID Document",
+          "previousDocumentHash": "The previous hash (for tracking changes)  WHY ALLOW UPDATES: - DID Documents may need to be updated (new keys, new services) - The hash changes when the document changes - The URI may change if document is moved to new location - We track both old and new values for audit purposes"
+        }
+      },
+      "DIDOwnershipTransferred(string,address,address)": {
+        "params": {
+          "did": "The DID being transferred",
+          "newController": "The new owner  WHY ALLOW TRANSFERS: - Users may want to migrate to a new wallet - Organizations may transfer DID control - Important for DID recovery scenarios",
+          "previousController": "The previous owner"
+        }
+      },
+      "DIDRegistered(string,address,bytes32,string)": {
+        "params": {
+          "controller": "The Ethereum address that controls this DID",
+          "did": "The Decentralized Identifier (e.g., \"did:ethr:0x123...\")",
+          "documentHash": "The hash of the DID Document (for verification)",
+          "documentURI": "The location where the DID Document can be fetched  WHY WE EMIT EVENTS: - Events are cheaper than storage (for historical data) - Frontend apps can listen to events for real-time updates - Events provide a searchable history of DID registrations - documentURI in event allows off-chain indexing without querying storage"
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "didExists(string)": {
+        "params": {
+          "did": "The DID to check"
+        },
+        "returns": {
+          "_0": "exists True if DID is registered, false otherwise  WHY THIS FUNCTION: - Simple boolean check (more gas efficient than full resolution) - Useful for validation before operations - Clearer intent than checking controller != address(0)"
+        }
+      },
+      "getDIDByController(address)": {
+        "params": {
+          "controller": "The address to look up"
+        },
+        "returns": {
+          "_0": "did The DID controlled by this address (empty if none)  WHY THIS FUNCTION: - Frontend: \"What's my DID?\" - Reverse lookup: Address -> DID - Useful for wallet integrations  NOTE: Returns empty string if address has no DID"
+        }
+      },
+      "hasDID(address)": {
+        "params": {
+          "controller": "The address to check"
+        },
+        "returns": {
+          "_0": "hasDID True if address controls a DID, false otherwise  WHY THIS FUNCTION: - Quick check before registration - Useful for UI state management - More readable than checking getDIDByController result"
+        }
+      },
+      "registerDID(string,bytes32,string)": {
+        "details": "Requirements: - DID must not already be registered - Caller must not already control a DID - DID format should be validated (simplified here for learning) - documentURI should not be empty (enables resolution)  HOW IT WORKS: 1. Check if DID already exists (revert if yes) 2. Check if caller already has a DID (revert if yes - simplified) 3. Validate documentURI is not empty (critical for resolution) 4. Store the DID record (including hash AND URI) 5. Store reverse mapping (address -> DID) 6. Emit event for frontend/off-chain systems  COMPLETE RESOLUTION FLOW: 1. Resolver calls resolveDID() → gets documentHash and documentURI 2. Resolver fetches document from documentURI (IPFS, HTTP, etc.) 3. Resolver hashes the fetched document 4. Resolver compares: fetched hash == documentHash? → Authentic!  GAS COST: ~70,000 - 90,000 gas (depending on DID and URI string lengths)  SECURITY CONSIDERATIONS: - Only the caller can register a DID for themselves - No one can register a DID for someone else - DID format validation is simplified (add more checks in production) - documentURI should point to immutable content (IPFS) or trusted source",
+        "params": {
+          "did": "The Decentralized Identifier (must follow format: \"did:ethr:0x...\")",
+          "documentHash": "The hash of the DID Document (SHA-256 recommended)",
+          "documentURI": "The location where the DID Document can be fetched                    Examples: \"ipfs://QmXoypizj...\" or \"https://example.com/did-docs/123\" "
+        }
+      },
+      "resolveDID(string)": {
+        "params": {
+          "did": "The DID to resolve"
+        },
+        "returns": {
+          "controller": "The address that controls this DID",
+          "documentHash": "The hash of the DID Document (for verification)",
+          "documentURI": "The location where the DID Document can be fetched",
+          "registeredAt": "When the DID was registered",
+          "updatedAt": "When the DID was last updated  WHAT IS DID RESOLUTION: - The process of looking up a DID to get its information - Similar to DNS lookup (domain name -> IP address) - Here: DID -> DID Document hash, URI, and controller  COMPLETE RESOLUTION FLOW: 1. Call resolveDID() → Get documentHash and documentURI 2. Fetch document from documentURI (IPFS, HTTP, etc.) 3. Hash the fetched document (SHA-256) 4. Compare: fetched hash == documentHash?    - If YES → Document is authentic ✓    - If NO → Document was tampered with ✗  WHY THIS FUNCTION: - Enables verifiers to resolve issuer DIDs - Allows checking DID ownership - Provides ALL information needed for complete resolution - documentURI solves the \"where to fetch\" problem you identified!  GAS COST: ~2,100 gas (warm storage read)"
+        }
+      },
+      "transferDIDOwnership(string,address)": {
+        "details": "Requirements: - DID must exist - Caller must be current controller - New controller must not already have a DID (simplified)  WHY ALLOW TRANSFERS: - Users may migrate to new wallets - Organizations may transfer control - Important for DID recovery scenarios  SECURITY CONSIDERATIONS: - Only current controller can transfer - Consider adding a delay/confirmation for production - Consider multi-sig for important DIDs",
+        "params": {
+          "did": "The DID to transfer",
+          "newController": "The new controller address "
+        }
+      },
+      "updateDIDDocument(string,bytes32,string)": {
+        "details": "Requirements: - DID must exist - Caller must be the DID controller - newDocumentURI must not be empty  WHY ALLOW UPDATES: - DID Documents may need updates (add new keys, services) - When document changes, hash changes - Document may be moved to new location (new IPFS CID, etc.) - This allows DID evolution without re-registration  USE CASES: - Adding a new public key for authentication - Adding a service endpoint (e.g., credential wallet) - Updating recovery mechanisms - Moving document to new storage location  SECURITY: - Only the controller can update - Old hash is preserved in event for audit trail - Both hash and URI are updated atomically",
+        "params": {
+          "did": "The DID to update",
+          "newDocumentHash": "The new hash of the DID Document",
+          "newDocumentURI": "The new location of the DID Document (can be same as before) "
+        }
+      }
+    },
+    "stateVariables": {
+      "_controllerToDID": {
+        "details": "Mapping from controller address to DID  WHY THIS MAPPING: - Allows reverse lookup: \"What DID does this address control?\" - Useful for frontend: \"Show me my DID\" - Enables one-address-to-one-DID relationship (simplified for learning)  NOTE: In real-world, one address might control multiple DIDs This is simplified for learning purposes"
+      },
+      "_dids": {
+        "details": "Mapping from DID string to DIDRecord  WHY USE MAPPING: - O(1) lookup time (very efficient) - Easy to check if a DID exists (check if controller != address(0)) - Gas efficient for reads  STORAGE COST: - Each DID record costs ~20,000 gas to store - Reading costs ~2,100 gas (warm) or ~100 gas (cold)"
+      }
+    },
+    "title": "DID Registry",
+    "version": 1
+  },
+  "userdoc": {
+    "events": {
+      "DIDDocumentUpdated(string,bytes32,string,bytes32)": {
+        "notice": "Emitted when a DID Document is updated"
+      },
+      "DIDOwnershipTransferred(string,address,address)": {
+        "notice": "Emitted when DID ownership is transferred"
+      },
+      "DIDRegistered(string,address,bytes32,string)": {
+        "notice": "Emitted when a new DID is registered"
+      }
+    },
+    "kind": "user",
+    "methods": {
+      "didExists(string)": {
+        "notice": "Checks if a DID exists"
+      },
+      "getDIDByController(address)": {
+        "notice": "Gets the DID controlled by an address"
+      },
+      "hasDID(address)": {
+        "notice": "Checks if an address controls a DID"
+      },
+      "registerDID(string,bytes32,string)": {
+        "notice": "Registers a new DID"
+      },
+      "resolveDID(string)": {
+        "notice": "Resolves a DID to its record"
+      },
+      "transferDIDOwnership(string,address)": {
+        "notice": "Transfers DID ownership to a new address"
+      },
+      "updateDIDDocument(string,bytes32,string)": {
+        "notice": "Updates the DID Document for an existing DID"
+      }
+    },
+    "notice": "A decentralized registry for Decentralized Identifiers (DIDs) on Ethereum",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 51,
+        "contract": "contracts/SSI/DIDRegistry.sol:DIDRegistry",
+        "label": "_dids",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_string_memory_ptr,t_struct(DIDRecord)45_storage)"
+      },
+      {
+        "astId": 56,
+        "contract": "contracts/SSI/DIDRegistry.sol:DIDRegistry",
+        "label": "_controllerToDID",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_mapping(t_address,t_string_storage)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_mapping(t_address,t_string_storage)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => string)",
+        "numberOfBytes": "32",
+        "value": "t_string_storage"
+      },
+      "t_mapping(t_string_memory_ptr,t_struct(DIDRecord)45_storage)": {
+        "encoding": "mapping",
+        "key": "t_string_memory_ptr",
+        "label": "mapping(string => struct DIDRegistry.DIDRecord)",
+        "numberOfBytes": "32",
+        "value": "t_struct(DIDRecord)45_storage"
+      },
+      "t_string_memory_ptr": {
+        "encoding": "bytes",
+        "label": "string",
+        "numberOfBytes": "32"
+      },
+      "t_string_storage": {
+        "encoding": "bytes",
+        "label": "string",
+        "numberOfBytes": "32"
+      },
+      "t_struct(DIDRecord)45_storage": {
+        "encoding": "inplace",
+        "label": "struct DIDRegistry.DIDRecord",
+        "members": [
+          {
+            "astId": 36,
+            "contract": "contracts/SSI/DIDRegistry.sol:DIDRegistry",
+            "label": "controller",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_address"
+          },
+          {
+            "astId": 38,
+            "contract": "contracts/SSI/DIDRegistry.sol:DIDRegistry",
+            "label": "documentHash",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_bytes32"
+          },
+          {
+            "astId": 40,
+            "contract": "contracts/SSI/DIDRegistry.sol:DIDRegistry",
+            "label": "documentURI",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_string_storage"
+          },
+          {
+            "astId": 42,
+            "contract": "contracts/SSI/DIDRegistry.sol:DIDRegistry",
+            "label": "registeredAt",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 44,
+            "contract": "contracts/SSI/DIDRegistry.sol:DIDRegistry",
+            "label": "updatedAt",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_uint256"
+          }
+        ],
+        "numberOfBytes": "160"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@
     "test": "hardhat test",
     "deploy": "hardhat deploy",
     "deploy:tags": "hardhat deploy --tags all",
+    "deploy:sepolia": "hardhat deploy --network sepolia --tags DIDRegistry",
     "verify": "ts-node scripts/verify-multi.ts",
     "docs": "hardhat docgen",
     "lint:natspec": "solhint 'contracts/**/*.sol' --config .solhint.json",
