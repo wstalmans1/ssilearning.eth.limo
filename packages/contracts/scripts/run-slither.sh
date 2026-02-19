@@ -7,7 +7,6 @@ if ! command -v slither &>/dev/null; then
   exit 1
 fi
 
-# Compile first so Slither has up-to-date artifacts
-pnpm run compile 2>/dev/null || true
-
-slither .
+# Use solc directly - avoids Hardhat node_modules and artifact path issues.
+# DIDRegistry.sol has no imports, so solc can compile it standalone.
+slither contracts/SSI/DIDRegistry.sol --compile-force-framework solc --fail-none

@@ -4,6 +4,7 @@ dist
 .env.*
 packages/contracts/cache
 packages/contracts/artifacts
+packages/contracts/out
 packages/contracts/typechain-types
 packages/contracts/.env.hardhat.local
 apps/dao-dapp/src/contracts/*
