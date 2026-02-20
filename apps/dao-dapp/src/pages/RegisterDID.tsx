@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { useAccount, useChainId, useSwitchChain, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { sepolia } from 'wagmi/chains'
 import { DID_REGISTRY_ADDRESS, DID_REGISTRY_ABI } from '../contracts/did-registry'
@@ -6,6 +6,7 @@ import { sha256Hex } from '../lib/hash'
 import { buildDIDDocument } from '../lib/did-document'
 import { HelpCallout } from '../components/HelpCallout'
 import { CollapsibleHelp } from '../components/CollapsibleHelp'
+import { useTransactionOverlay } from '../hooks/useTransactionOverlay'
 
 function friendlyError(msg: string): string {
   if (msg.includes('DID already registered')) return 'This DID is already taken. Each DID can only be registered once.'
@@ -29,7 +30,17 @@ export function RegisterDID() {
   const chainId = useChainId()
   const { switchChain } = useSwitchChain()
   const { writeContract, data: hash, isPending, error: writeError } = useWriteContract()
-  const { isLoading: isConfirming } = useWaitForTransactionReceipt({ hash })
+  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash })
+  const resetForm = useCallback(() => {
+    setDid('')
+    setServiceUrl('')
+    setCustomJson('')
+    setUseCustomJson(false)
+    setDocumentURI('')
+    setError('')
+    setComputedHash(null)
+  }, [])
+  useTransactionOverlay({ isPending, isConfirming, isSuccess, hash, onSuccessDismiss: resetForm })
 
   const isWrongChain = chainId !== sepolia.id
 
@@ -273,15 +284,18 @@ export function RegisterDID() {
             </HelpCallout>
           )}
 
-          {isPending && (
-            <HelpCallout title="Confirm in your wallet" variant="info">
-              Approve the transaction in your wallet. This costs a small amount of Sepolia ETH.
-            </HelpCallout>
-          )}
-
-          {isComplete && (
+          {isComplete && hash && (
             <HelpCallout title="Success!" variant="tip">
-              Your DID is registered. Switch to &quot;My DID&quot; to view it, or &quot;Resolve&quot; to look it up.
+              Your DID is registered. Switch to &quot;My DID&quot; to view it, or{' '}
+              <a
+                href={`https://eth-sepolia.blockscout.com/tx/${hash}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-emerald-400 hover:underline"
+              >
+                view the transaction on Blockscout
+              </a>
+              .
             </HelpCallout>
           )}
 

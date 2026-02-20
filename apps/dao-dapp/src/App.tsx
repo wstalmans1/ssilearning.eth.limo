@@ -4,6 +4,7 @@ import { ResolveDID } from './pages/ResolveDID'
 import { RegisterDID } from './pages/RegisterDID'
 import { MyDID } from './pages/MyDID'
 import { HelpCallout } from './components/HelpCallout'
+import { ModalManager } from './components/ModalManager'
 
 type Tab = 'resolve' | 'register' | 'my'
 
@@ -76,6 +77,7 @@ export default function App() {
           Phase 2 — Self-Sovereign Identity Learning
         </footer>
       </div>
+      <ModalManager />
     </div>
   )
 }

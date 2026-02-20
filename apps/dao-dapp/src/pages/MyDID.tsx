@@ -4,6 +4,7 @@ import { DID_REGISTRY_ADDRESS, DID_REGISTRY_ABI } from '../contracts/did-registr
 import { sha256Hex, isValidBytes32Hex } from '../lib/hash'
 import { HelpCallout } from '../components/HelpCallout'
 import { CollapsibleHelp } from '../components/CollapsibleHelp'
+import { useTransactionOverlay } from '../hooks/useTransactionOverlay'
 
 export function MyDID() {
   const { address, isConnected } = useAccount()
@@ -30,7 +31,8 @@ export function MyDID() {
   })
 
   const { writeContract, data: txHash, isPending, error: writeError } = useWriteContract()
-  const { isLoading: isConfirming } = useWaitForTransactionReceipt({ hash: txHash })
+  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash: txHash })
+  useTransactionOverlay({ isPending, isConfirming, isSuccess, hash: txHash })
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -167,9 +169,6 @@ export function MyDID() {
         <HelpCallout title="Error" variant="warning">
           {error || writeError?.message}
         </HelpCallout>
-      )}
-      {txHash && (
-        <p className="mt-2 text-sm text-emerald-400">{isConfirming ? 'Confirming in wallet…' : 'Done!'}</p>
       )}
 
       {showUpdate && (
