@@ -84,7 +84,7 @@ export function ResolveDID() {
                       <p className="mb-2">You can check that the document at the URI hasn&apos;t been changed since it was registered. If someone tampered with it, the hash won&apos;t match.</p>
                       <p className="mb-2 font-medium">Step-by-step (using an external tool):</p>
                       <ol className="list-decimal list-inside space-y-1.5 text-sm">
-                        <li>Open the <strong>Document URI</strong> above in your browser. Copy the entire JSON you see.</li>
+                        <li>Open the <strong>Document URI</strong> below in your browser. Copy the entire JSON you see.</li>
                         <li>Paste it into an <strong>online SHA-256 calculator</strong> (e.g. <a href="https://emn178.github.io/online-tools/sha256.html" target="_blank" rel="noopener noreferrer">emn178.github.io/online-tools/sha256</a> — runs in your browser, no upload).</li>
                         <li>Get the hash output (64 hex chars), prepend <code>0x</code>, and compare to the on-chain hash above. They should match.</li>
                       </ol>
