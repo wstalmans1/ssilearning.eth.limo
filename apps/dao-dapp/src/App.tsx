@@ -70,7 +70,7 @@ export default function App() {
               <span className="ml-1.5 text-xs opacity-80 sm:inline"> {TAB_INFO.learn.hint}</span>
             </button>
           </div>
-          <div className="flex gap-1 rounded-xl bg-zinc-900/80 p-1 flex-wrap">
+          <div className="flex gap-2 rounded-xl bg-zinc-900/80 p-2 flex-wrap">
             {(['resolve', 'register', 'my', 'issue', 'verify'] as const).map((id) => (
               <button
                 key={id}
@@ -78,7 +78,7 @@ export default function App() {
                 className={`flex-1 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors min-w-0 ${
                   tab === id
                     ? 'bg-emerald-600 text-white'
-                    : 'text-zinc-400 hover:bg-zinc-800 hover:text-white'
+                    : 'bg-zinc-800/80 text-zinc-300 hover:bg-zinc-700 hover:text-white'
                 }`}
               >
                 <span>{TAB_INFO[id].label}</span>
