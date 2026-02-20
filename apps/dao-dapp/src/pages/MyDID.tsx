@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { DID_REGISTRY_ADDRESS, DID_REGISTRY_ABI } from '../contracts/did-registry'
 import { sha256Hex, isValidBytes32Hex } from '../lib/hash'
@@ -15,6 +15,8 @@ export function MyDID() {
   const [newURI, setNewURI] = useState('')
   const [transferTo, setTransferTo] = useState('')
   const [error, setError] = useState('')
+  const [lastTxType, setLastTxType] = useState<'update' | 'transfer' | null>(null)
+  const [showSuccessBanner, setShowSuccessBanner] = useState(false)
 
   const { data: myDid, refetch: refetchDid } = useReadContract({
     address: address ? DID_REGISTRY_ADDRESS : undefined,
@@ -32,7 +34,19 @@ export function MyDID() {
 
   const { writeContract, data: txHash, isPending, error: writeError } = useWriteContract()
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash: txHash })
-  useTransactionOverlay({ isPending, isConfirming, isSuccess, hash: txHash })
+  const onSuccessDismiss = useCallback(() => {
+    if (lastTxType === 'update') {
+      setNewHash('')
+      setNewURI('')
+      setUseHashInput(false)
+      setShowUpdate(false)
+    } else if (lastTxType === 'transfer') {
+      setTransferTo('')
+      setShowTransfer(false)
+    }
+    setShowSuccessBanner(true)
+  }, [lastTxType])
+  useTransactionOverlay({ isPending, isConfirming, isSuccess, hash: txHash, onSuccessDismiss })
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -56,6 +70,7 @@ export function MyDID() {
       return
     }
 
+    setLastTxType('update')
     writeContract({
       address: DID_REGISTRY_ADDRESS,
       abi: DID_REGISTRY_ABI,
@@ -78,6 +93,7 @@ export function MyDID() {
       return
     }
 
+    setLastTxType('transfer')
     writeContract({
       address: DID_REGISTRY_ADDRESS,
       abi: DID_REGISTRY_ABI,
@@ -152,13 +168,13 @@ export function MyDID() {
 
       <div className="mt-4 flex flex-wrap gap-2">
         <button
-          onClick={() => { setShowUpdate(!showUpdate); setShowTransfer(false); setError('') }}
+          onClick={() => { setShowUpdate(!showUpdate); setShowTransfer(false); setError(''); setShowSuccessBanner(false) }}
           className="rounded-lg border border-emerald-600 bg-emerald-600/20 px-4 py-2 text-sm text-emerald-400 hover:bg-emerald-600/30"
         >
           Update document
         </button>
         <button
-          onClick={() => { setShowTransfer(!showTransfer); setShowUpdate(false); setError('') }}
+          onClick={() => { setShowTransfer(!showTransfer); setShowUpdate(false); setError(''); setShowSuccessBanner(false) }}
           className="rounded-lg border border-zinc-600 px-4 py-2 text-sm text-zinc-300 hover:bg-zinc-800"
         >
           Transfer ownership
@@ -168,6 +184,27 @@ export function MyDID() {
       {(error || writeError) && (
         <HelpCallout title="Error" variant="warning">
           {error || writeError?.message}
+        </HelpCallout>
+      )}
+
+      {showSuccessBanner && txHash && (
+        <HelpCallout
+          title={lastTxType === 'transfer' ? 'Ownership transferred!' : 'Document updated!'}
+          variant="tip"
+          onDismiss={() => setShowSuccessBanner(false)}
+        >
+          {lastTxType === 'transfer'
+            ? 'DID ownership has been transferred to the new address. '
+            : 'Your DID document has been updated on-chain. '}
+          <a
+            href={`https://eth-sepolia.blockscout.com/tx/${txHash}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-emerald-400 hover:underline"
+          >
+            View the transaction on Blockscout
+          </a>
+          .
         </HelpCallout>
       )}
 

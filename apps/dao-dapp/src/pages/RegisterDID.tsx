@@ -26,6 +26,7 @@ export function RegisterDID() {
   const [documentURI, setDocumentURI] = useState('')
   const [error, setError] = useState('')
   const [computedHash, setComputedHash] = useState<`0x${string}` | null>(null)
+  const [successDismissed, setSuccessDismissed] = useState(false)
 
   const chainId = useChainId()
   const { switchChain } = useSwitchChain()
@@ -39,6 +40,7 @@ export function RegisterDID() {
     setDocumentURI('')
     setError('')
     setComputedHash(null)
+    setSuccessDismissed(false)
   }, [])
   useTransactionOverlay({ isPending, isConfirming, isSuccess, hash, onSuccessDismiss: resetForm })
 
@@ -265,6 +267,19 @@ export function RegisterDID() {
             </p>
           </div>
 
+          <CollapsibleHelp title="How to verify your hash before registering">
+            <p className="mb-2">Before spending gas, make sure the file on IPFS matches your computed hash. A tiny change (extra space, different formatting) gives a different hash — and registration would fail or store the wrong hash.</p>
+            <p className="mb-2 font-medium">Step-by-step (using an external tool):</p>
+            <ol className="list-decimal list-inside space-y-1.5 text-sm">
+              <li>Open your document URI in a browser (e.g. <code>https://dweb.link/ipfs/Qm...</code>). You should see raw JSON.</li>
+              <li>Select all (Ctrl/Cmd+A) and copy it.</li>
+              <li>Paste the content into an <strong>online SHA-256 calculator</strong> (e.g. <a href="https://emn178.github.io/online-tools/sha256.html" target="_blank" rel="noopener noreferrer">emn178.github.io/online-tools/sha256</a> — runs in your browser, no upload).</li>
+              <li>Get the hash output (64 hex characters). Prepend <code>0x</code> (e.g. <code>0x</code> + <code>abc123...</code>).</li>
+              <li>Compare: it must match the hash you computed above. If they match, you&apos;re good to register.</li>
+            </ol>
+            <p className="mt-2 text-xs text-zinc-500"><strong>Command line alternative:</strong> <code>echo -n &apos;YOUR_JSON&apos; | shasum -a 256</code> (Mac) or <code>sha256sum</code> (Linux). Prepend <code>0x</code> to the output. If the hashes don&apos;t match, re-upload the exact JSON you downloaded in Step 2.</p>
+          </CollapsibleHelp>
+
           {isWrongChain && (
             <HelpCallout title="Wrong network" variant="warning">
               MetaMask must be on Sepolia testnet. Switch your network first, then try again.
@@ -284,8 +299,8 @@ export function RegisterDID() {
             </HelpCallout>
           )}
 
-          {isComplete && hash && (
-            <HelpCallout title="Success!" variant="tip">
+          {isComplete && hash && !successDismissed && (
+            <HelpCallout title="Success!" variant="tip" onDismiss={() => setSuccessDismissed(true)}>
               Your DID is registered. Switch to &quot;My DID&quot; to view it, or{' '}
               <a
                 href={`https://eth-sepolia.blockscout.com/tx/${hash}`}
