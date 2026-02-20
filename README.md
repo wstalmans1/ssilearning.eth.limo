@@ -12,14 +12,14 @@ All learning documents are in the `docs/learning/` folder (numbered in reading o
 2. **`docs/learning/02_LEARNING_PATH.md`** - Complete learning journey with all phases
 3. **`docs/learning/03_PHASE_2_IMPLEMENTATION.md`** - Step-by-step guide for Phase 2 (DID Registry)
 4. **`docs/learning/04_DID_RESOLUTION_EXPLAINED.md`** - Deep dive into DID resolution and documentURI
+5. **`docs/learning/05_PHASE_3_IMPLEMENTATION.md`** - Phase 3: Verifiable Credentials
 
-## 🎯 Current Phase: Phase 2 - DID Registry
+## 🎯 Current Phase: Phase 3 - Verifiable Credentials
 
 The project currently includes:
+- ✅ Phase 2: DID Registry (contract, DApp, tests)
+- ✅ Phase 3: Credential Registry (contract, Issue/Verify DApp pages)
 - ✅ Complete learning path documentation
-- ✅ DID Registry smart contract (fully annotated)
-- ✅ Comprehensive test suite (educational!)
-- ✅ Deployment scripts
 
 ---
 

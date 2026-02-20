@@ -8,6 +8,8 @@
     "deploy": "hardhat deploy",
     "deploy:tags": "hardhat deploy --tags all",
     "deploy:sepolia": "hardhat deploy --network sepolia --tags DIDRegistry",
+    "deploy:sepolia:vc": "hardhat deploy --network sepolia --tags CredentialRegistry",
+    "deploy:sepolia:all": "hardhat deploy --network sepolia --tags SSI",
     "verify": "ts-node scripts/verify-multi.ts",
     "docs": "hardhat docgen",
     "lint:natspec": "solhint 'contracts/**/*.sol' --config .solhint.json",

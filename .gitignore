@@ -6,6 +6,7 @@ packages/contracts/cache
 packages/contracts/artifacts
 packages/contracts/out
 packages/contracts/typechain-types
+packages/contracts/gasReporterOutput.json
 packages/contracts/.env.hardhat.local
 apps/dao-dapp/src/contracts/*
 !apps/dao-dapp/src/contracts/.gitkeep
