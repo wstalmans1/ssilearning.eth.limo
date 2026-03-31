@@ -10,6 +10,6 @@ jobs:
     uses: wstalmans1/cicd-workflows-tests/.github/workflows/reusable-frontend-deploy.yml@main
     with:
       pin-name-prefix: ssilearning.eth.limo
-      node-version: '22'
+      node-version: '20'
       pnpm-version: '10'
     secrets: inherit
