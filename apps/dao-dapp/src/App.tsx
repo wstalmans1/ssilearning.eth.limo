@@ -97,8 +97,14 @@ export default function App() {
           {tab === 'verify' && <VerifyCredential />}
         </main>
 
-        <footer className="mt-12 text-center text-xs text-zinc-600">
-          Phase 3 — Verifiable Credentials
+        <footer className="mt-12 space-y-1.5 text-center text-xs text-zinc-600">
+          <p>Phase 3 — Verifiable Credentials</p>
+          <p
+            className="font-mono text-[10px] tracking-wide text-zinc-500"
+            title="App package version and Git commit this build was made from"
+          >
+            v{__APP_VERSION__} · {__GIT_SHA__}
+          </p>
         </footer>
       </div>
       <ModalManager />
