@@ -11,5 +11,5 @@ jobs:
     with:
       pin-name-prefix: ssilearning.eth.limo
       node-version: '20'
-      pnpm-version: '10'
+      pnpm-version: '10.16.1'
     secrets: inherit
