@@ -29,7 +29,7 @@ The project currently includes:
 **Contracts**: Hardhat v2 + @nomicfoundation/hardhat-toolbox (ethers v6), OpenZeppelin, TypeChain, hardhat-deploy  
 **DX**: Foundry (Forge/Anvil), gas-reporter, contract-sizer, solidity-docgen (auto, opt-out), Solhint/Prettier, Slither, Husky  
 **Documentation**: Comprehensive NatSpec support with linting, validation, and auto-generation (disable with `DOCS_AUTOGEN=false`)  
-**CI**: GitHub Actions
+**CI**: GitHub Actions (frontend deploy via reusable workflow + contracts/tests)
 
 ## 1) First-time setup
 ```bash
